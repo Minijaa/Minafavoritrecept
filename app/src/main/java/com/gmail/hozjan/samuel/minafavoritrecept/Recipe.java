@@ -13,13 +13,17 @@ public class Recipe {
     private UUID mId;
     private String mName;
     private String mDescription;
+    private int mPortions;
+    private int mTimeRequired;
     private ArrayList<Ingredient> mIncidences;
     private Date mDate;
 
 
-    public Recipe(String mName, String mDescription{
+    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
         this.mName = mName;
         this.mDescription = mDescription;
+        this.mPortions = mPortions;
+        this.mTimeRequired = mTimeRequired;
         mId = UUID.randomUUID();
         mDate = new Date();
 
