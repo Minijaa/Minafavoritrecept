@@ -18,7 +18,9 @@ public class Recipe {
     private ArrayList<Ingredient> mIncidences;
     private Date mDate;
 
+    public Recipe(){
 
+    }
     public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
         this.mName = mName;
         this.mDescription = mDescription;

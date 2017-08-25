@@ -22,14 +22,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/matratt_test"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="0dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageButton
+            android:id="@+id/recipe_add_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/recipe_name"
+            app:layout_constraintRight_toRightOf="@+id/recipe_image" />
+
+        <EditText
             android:id="@+id/recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,58 +45,52 @@
             android:padding="8dp"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="0dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_image" />
+            app:layout_constraintTop_toBottomOf="@+id/recipe_image"
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <TextView
             android:id="@+id/recipe_category"
-            android:layout_width="360dp"
+            android:layout_width="0dp"
             android:layout_height="27dp"
             android:text="Kötträtter"
             android:textAlignment="center"
             android:background="@color/colorPrimary"
             android:textColor="#FFFF"
             android:paddingBottom="8dp"
-            android:layout_marginTop="0dp"
             app:layout_constraintTop_toBottomOf="@+id/recipe_name"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <TextView
-            android:layout_width="359dp"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:text="Ingredienser"
             android:paddingTop="12dp"
-            android:paddingLeft="8dp"
+            android:paddingLeft="16dp"
             android:textStyle="bold"
             android:background="@color/colorAccent"
             android:id="@+id/linearLayout"
-            app:layout_constraintEnd_toStartOf="@+id/recipe_add_ingredient_button"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="0dp"
-            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_category"
             app:layout_constraintHorizontal_bias="0.0" />
 
         <ImageButton
-            android:id="@+id/recipe_add_ingredient_button"
+            android:id="@+id/recipe_edit_ingredient_button"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            app:srcCompat="@drawable/ic_add_black_24dp"
-            android:background="transparent"
-            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
+            android:background="@color/colorAccent"
+            android:layout_marginEnd="16dp"
 
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="0dp"
             app:layout_constraintTop_toBottomOf="@+id/recipe_category"
-            android:layout_marginBottom="0dp"
             android:layout_marginRight="16dp"
             app:layout_constraintBottom_toTopOf="@+id/recipe_ing1"
             app:layout_constraintVertical_bias="0.0" />
@@ -100,66 +100,53 @@
             android:id="@+id/recipe_ing1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#f5f5f5"
-            android:paddingLeft="8dp"
+            android:paddingLeft="16dp"
             android:paddingBottom="4dp"
-            android:text="1kg kyckling"
+            android:text="3dl ris \n1kg kyckling \n1st salladsblad"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-        <TextView
-            android:id="@+id/recipe_ing2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#f5f5f5"
-            android:paddingLeft="8dp"
-            android:paddingBottom="4dp"
-            android:text="1kg kyckling"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_ing1"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-        <TextView
-            android:id="@+id/recipe_ing3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#f5f5f5"
-            android:paddingLeft="8dp"
-            android:paddingBottom="4dp"
-
-            android:text="1kg kyckling"
-            android:layout_marginTop="-1dp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_ing2"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:text="Instruktioner"
-            android:padding="8dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="16dp"
             android:textStyle="bold"
-            android:id="@+id/textView"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_ing3"
+            android:background="@color/colorAccent"
+            android:id="@+id/recipe_instructions_title"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_ing1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/recipe_edit_instruction_button"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
+            android:background="@color/colorAccent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/recipe_instructions"
+            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:id="@+id/recipe_instructions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="#f5f5f5"
-            android:padding="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:text="Först börjar du att steka kyclingen i 8min. Sedan blandar du samman allting. bla bla bla bla bla bla bla bla baskölsjdf lsakjf hsdalkfj hsdlfkjsahd flsadkjhf sdlkjf hsadlkfj hsdaalf kjsdhf lsdakjfh sadlfkj hsdflksdjhaf sdlkajfhsda flsadkjf h"
-            android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:layout_marginRight="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_instructions_title"
             app:layout_constraintRight_toRightOf="parent" />
 
 
