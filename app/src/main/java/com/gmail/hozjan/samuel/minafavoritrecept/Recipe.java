@@ -13,10 +13,11 @@ public class Recipe {
     private UUID mId;
     private String mName;
     private String mDescription;
+    private String mCategory;
     private int mPortions;
     private int mTimeRequired;
-    private ArrayList<Ingredient> mIncidences;
-    private Date mDate;
+    private ArrayList<Ingredient> mIngrediences;
+    private Date mDateAdded;
 
     public Recipe(){
 
@@ -27,7 +28,7 @@ public class Recipe {
         this.mPortions = mPortions;
         this.mTimeRequired = mTimeRequired;
         mId = UUID.randomUUID();
-        mDate = new Date();
+        mDateAdded = new Date();
 
     }
 
@@ -53,5 +54,13 @@ public class Recipe {
 
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
+    }
+
+    public String getmCategory() {
+        return mCategory;
+    }
+
+    public void setmCategory(String mCategory) {
+        this.mCategory = mCategory;
     }
 }

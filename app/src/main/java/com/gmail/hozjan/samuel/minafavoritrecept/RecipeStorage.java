@@ -27,6 +27,7 @@ public class RecipeStorage {
         for (int i = 0; i<100;i++){
             Recipe r = new Recipe();
             r.setmName("Recept #" + i);
+            r.setmCategory("Kötträtter");
             mRecipes.add(r);
         }
 
