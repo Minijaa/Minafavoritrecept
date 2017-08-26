@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toTopOf="@+id/recipe_name"
             app:layout_constraintRight_toRightOf="@+id/recipe_image" />
 
-        <EditText
+        <TextView
             android:id="@+id/recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -148,6 +148,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_instructions_title"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/recipe_edit_text_togglebutton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/recipe_category" />
 
 
     </android.support.constraint.ConstraintLayout>
