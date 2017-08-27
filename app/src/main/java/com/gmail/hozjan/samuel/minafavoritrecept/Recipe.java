@@ -32,15 +32,15 @@ public class Recipe {
 
     }
 
-    public UUID getmId() {
+    public UUID getId() {
         return mId;
     }
 
-    public void setmId(UUID mId) {
+    public void setId(UUID mId) {
         this.mId = mId;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
@@ -48,19 +48,35 @@ public class Recipe {
         this.mName = mName;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public String getmCategory() {
+    public String getCategory() {
         return mCategory;
     }
 
-    public void setmCategory(String mCategory) {
+    public void setCategory(String mCategory) {
         this.mCategory = mCategory;
+    }
+
+    public int getPortions() {
+        return mPortions;
+    }
+
+    public void setPortions(int portions) {
+        mPortions = portions;
+    }
+
+    public int getTimeRequired() {
+        return mTimeRequired;
+    }
+
+    public void setTimeRequired(int timeRequired) {
+        mTimeRequired = timeRequired;
     }
 }

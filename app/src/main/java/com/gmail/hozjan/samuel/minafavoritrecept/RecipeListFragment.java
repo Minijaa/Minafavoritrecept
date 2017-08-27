@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -49,8 +48,8 @@ public class RecipeListFragment extends Fragment {
         }
         private void bind(Recipe recipe){
             mRecipe = recipe;
-            mNameTextView.setText(mRecipe.getmName());
-            mCategoryTextView.setText(mRecipe.getmCategory());
+            mNameTextView.setText(mRecipe.getName());
+            mCategoryTextView.setText(mRecipe.getCategory());
             //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.matratt_test));
         }
 
@@ -86,7 +85,7 @@ public class RecipeListFragment extends Fragment {
     }
     private void updateUI(){
         RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
-        List<Recipe> recipes = recipeStorage.getmRecipes();
+        List<Recipe> recipes = recipeStorage.getRecipes();
 
         mAdapter = new RecipeAdapter(recipes);
         mRecipeRecyclerView.setAdapter(mAdapter);

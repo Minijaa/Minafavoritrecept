@@ -27,18 +27,18 @@ public class RecipeStorage {
         for (int i = 0; i<100;i++){
             Recipe r = new Recipe();
             r.setmName("Recept #" + i);
-            r.setmCategory("Kötträtter");
+            r.setCategory("Kötträtter");
             mRecipes.add(r);
         }
 
     }
 
-    public List<Recipe> getmRecipes(){
+    public List<Recipe> getRecipes(){
         return mRecipes;
     }
     public Recipe getRecipe(UUID id){
         for (Recipe recipe : mRecipes){
-            if (recipe.getmId().equals(id)){
+            if (recipe.getId().equals(id)){
                 return recipe;
             }
         }
