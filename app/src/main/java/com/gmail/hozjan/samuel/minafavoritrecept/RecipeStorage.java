@@ -36,6 +36,7 @@ public class RecipeStorage {
     public List<Recipe> getRecipes(){
         return mRecipes;
     }
+
     public Recipe getRecipe(UUID id){
         for (Recipe recipe : mRecipes){
             if (recipe.getId().equals(id)){

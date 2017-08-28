@@ -20,7 +20,7 @@ public class Recipe {
     private Date mDateAdded;
 
     public Recipe(){
-
+        mId = UUID.randomUUID();
     }
     public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
         this.mName = mName;

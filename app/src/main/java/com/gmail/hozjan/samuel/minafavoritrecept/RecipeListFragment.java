@@ -55,7 +55,7 @@ public class RecipeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), RecipeActivity.class);
+            Intent intent = RecipeActivity.newIntent(getActivity(), mRecipe.getId());
             startActivity(intent);
         }
     }

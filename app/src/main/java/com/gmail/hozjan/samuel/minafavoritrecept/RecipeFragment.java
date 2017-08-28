@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 /**
  * Created by KOS on 2017-08-25.
  */
@@ -22,7 +24,9 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecipe = new Recipe();
+
+        UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
+        mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
     }
 
     @Nullable
@@ -30,6 +34,9 @@ public class RecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recipe, container, false);
         mNameField = (TextView) v.findViewById(R.id.recipe_name);
+        mNameField.setText(mRecipe.getName());
+
+
 //        mNameField.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
