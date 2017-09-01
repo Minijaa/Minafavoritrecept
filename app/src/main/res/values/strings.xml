@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Mina favoritrecept</string>
-    <string name="recipe_name_hint">Enter the name of the Recipe</string>
+    <string name="recipe_name_hint">Fyll i receptets namn</string>
+    <string name="new_recipe">Nytt recept</string>
+    <string name="recipe_name_label">Namn</string>
+    <string name="recipe_category_label">Kategori</string>
+    <string name="recipe_category_hint">Fyll i receptets kategori</string>
+    <string name="recipe_ingredient_hint">Fyll i receptets ingredienser</string>
+    <string name="recipe_description_hint">Fyll i receptets instruktioner</string>
+    <string name="recipe_ingredient_label">Ingredienser</string>
+    <string name="recipe_description_label">Instruktioner</string>
+
 </resources>

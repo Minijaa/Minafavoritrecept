@@ -14,14 +14,19 @@ public class Recipe {
     private String mName;
     private String mDescription;
     private String mCategory;
+
+
+
+    private String mIngrediences;
     private int mPortions;
     private int mTimeRequired;
-    private ArrayList<Ingredient> mIngrediences;
+    //private ArrayList<Ingredient> mIngrediences;
     private Date mDateAdded;
 
     public Recipe(){
         mId = UUID.randomUUID();
     }
+
     public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
         this.mName = mName;
         this.mDescription = mDescription;
@@ -78,5 +83,12 @@ public class Recipe {
 
     public void setTimeRequired(int timeRequired) {
         mTimeRequired = timeRequired;
+    }
+    public String getIngrediences() {
+        return mIngrediences;
+    }
+
+    public void setIngrediences(String ingrediences) {
+        mIngrediences = ingrediences;
     }
 }

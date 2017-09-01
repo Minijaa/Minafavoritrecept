@@ -24,12 +24,12 @@ public class RecipeStorage {
 
     private RecipeStorage(Context context){
         mRecipes = new ArrayList<>();
-        for (int i = 0; i<100;i++){
-            Recipe r = new Recipe();
-            r.setmName("Recept #" + i);
-            r.setCategory("Kötträtter");
-            mRecipes.add(r);
-        }
+//        for (int i = 0; i<100;i++){
+//            Recipe r = new Recipe();
+//            r.setmName("Recept #" + i);
+//            r.setCategory("Kötträtter");
+//            mRecipes.add(r);
+//        }
 
     }
 
@@ -44,6 +44,10 @@ public class RecipeStorage {
             }
         }
     return null;
+    }
+
+    public void addRecipe(Recipe recipe){
+        mRecipes.add(recipe);
     }
 
 
