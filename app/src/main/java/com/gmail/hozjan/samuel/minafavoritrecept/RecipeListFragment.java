@@ -122,6 +122,7 @@ public class RecipeListFragment extends Fragment {
             RecipeStorage.get(getActivity()).addRecipe(recipe);
             Intent intent = RecipeEditActivity.newIntent(getActivity(), recipe.getId());
             startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

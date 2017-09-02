@@ -2,6 +2,7 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class RecipeStorage {
     private static RecipeStorage sRecipestorage;
     private List<Recipe> mRecipes;
+    private Context mContext;
 
     public static RecipeStorage get(Context context){
         if (sRecipestorage == null){
@@ -24,6 +26,7 @@ public class RecipeStorage {
 
     private RecipeStorage(Context context){
         mRecipes = new ArrayList<>();
+        mContext = context.getApplicationContext();
 //        for (int i = 0; i<100;i++){
 //            Recipe r = new Recipe();
 //            r.setmName("Recept #" + i);
@@ -48,6 +51,11 @@ public class RecipeStorage {
 
     public void addRecipe(Recipe recipe){
         mRecipes.add(recipe);
+    }
+
+    public File getImageFile(Recipe recipe){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, recipe.getImageFilename());
     }
 
 

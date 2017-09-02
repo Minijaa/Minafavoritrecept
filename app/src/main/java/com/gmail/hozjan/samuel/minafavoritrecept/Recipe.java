@@ -91,4 +91,8 @@ public class Recipe {
     public void setIngrediences(String ingrediences) {
         mIngrediences = ingrediences;
     }
+
+    public String getImageFilename(){
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 }

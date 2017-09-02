@@ -21,25 +21,18 @@
             android:adjustViewBounds="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/matratt_test"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/default_image"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/recipe_add_image_button"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/recipe_name"
-            app:layout_constraintRight_toRightOf="@+id/recipe_image" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"/>
 
         <TextView
             android:id="@+id/recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Kyckling med råris och svampstuvning med ett litet salladsblad"
             android:textColor="#FFFF"
             android:background="@color/colorPrimary"
             android:padding="8dp"
@@ -54,7 +47,6 @@
             android:id="@+id/recipe_category"
             android:layout_width="0dp"
             android:layout_height="27dp"
-            android:text="Kötträtter"
             android:textAlignment="center"
             android:background="@color/colorPrimary"
             android:textColor="#FFFF"
@@ -62,9 +54,6 @@
             app:layout_constraintTop_toBottomOf="@+id/recipe_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
             app:layout_constraintHorizontal_bias="0.0" />
 
         <TextView
@@ -81,23 +70,9 @@
             app:layout_constraintTop_toBottomOf="@+id/recipe_category"
             app:layout_constraintHorizontal_bias="0.0" />
 
-        <ImageButton
-            android:id="@+id/recipe_edit_ingredient_button"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
-            android:background="@color/colorAccent"
-            android:layout_marginEnd="16dp"
-
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_category"
-            android:layout_marginRight="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/recipe_ing1"
-            app:layout_constraintVertical_bias="0.0" />
-
 
         <TextView
-            android:id="@+id/recipe_ing1"
+            android:id="@+id/recipe_ingrediences"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
@@ -117,24 +92,12 @@
             android:textStyle="bold"
             android:background="@color/colorAccent"
             android:id="@+id/recipe_instructions_title"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_ing1"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_ingrediences"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="0dp"
             app:layout_constraintHorizontal_bias="0.0" />
 
-        <ImageButton
-            android:id="@+id/recipe_edit_instruction_button"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
-            android:background="@color/colorAccent"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/recipe_instructions"
-            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:id="@+id/recipe_instructions"
@@ -148,17 +111,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_instructions_title"
             app:layout_constraintRight_toRightOf="parent" />
-
-        <ImageButton
-            android:id="@+id/recipe_edit_text_togglebutton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_menu_edit"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/recipe_category" />
 
 
     </android.support.constraint.ConstraintLayout>
