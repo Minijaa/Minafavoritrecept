@@ -1,5 +1,6 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -14,9 +15,7 @@ public class Recipe {
     private String mName;
     private String mDescription;
     private String mCategory;
-
-
-
+    private File mImage;
     private String mIngrediences;
     private int mPortions;
     private int mTimeRequired;
@@ -94,5 +93,13 @@ public class Recipe {
 
     public String getImageFilename(){
         return "IMG_" + getId().toString() + ".jpg";
+    }
+
+    public File getImage() {
+        return mImage;
+    }
+
+    public void setImage(File image) {
+        mImage = image;
     }
 }

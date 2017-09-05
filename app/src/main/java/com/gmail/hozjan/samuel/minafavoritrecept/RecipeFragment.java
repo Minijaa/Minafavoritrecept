@@ -1,6 +1,11 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +23,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.UUID;
 
 /**
@@ -30,7 +36,8 @@ public class RecipeFragment extends Fragment {
     private TextView mInsctructions;
     private TextView mIngrediences;
     private TextView mRecipeCategory;
-    private ImageView mRecipeImage;
+    private ImageView mRecipeImageView;
+    private File mRecipeImageFile;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +46,7 @@ public class RecipeFragment extends Fragment {
 
         UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
         mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
+        mRecipeImageFile = RecipeStorage.get(getActivity()).getImageFile(mRecipe);
     }
 
     @Nullable
@@ -53,6 +61,9 @@ public class RecipeFragment extends Fragment {
         mIngrediences.setText(mRecipe.getIngrediences());
         mInsctructions = (TextView) v.findViewById(R.id.recipe_instructions);
         mInsctructions.setText(mRecipe.getDescription());
+        mRecipeImageView = (ImageView) v.findViewById(R.id.recipe_image);
+
+        updateImageView();
         return v;
     }
 
@@ -71,14 +82,35 @@ public class RecipeFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void updateUI(){
-       //RecipeFragment fragment = new RecipeFragment();
-        // getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
+    public void updateUI() {
+        mNameField.setText(mRecipe.getName());
+        mRecipeCategory.setText(mRecipe.getCategory());
+        mIngrediences.setText(mRecipe.getIngrediences());
+        mInsctructions.setText(mRecipe.getDescription());
+        updateImageView();
     }
+
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
+    }
 
+    private void updateImageView() {
+        if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
+            //mRecipeImageView.setImageDrawable(null);
+            Drawable dr = getResources().getDrawable(R.drawable.matratt_test);
+            Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+            Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 360, 240, true));
+            mRecipeImageView.setImageDrawable(d);
+        } else {
+//            Point size = new Point();
+//            getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+//            Bitmap bitmapUnscaled = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
+//            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmapUnscaled, size.y, size.x, true);
+            Bitmap bitmapScaled = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
+            mRecipeImageView.setImageBitmap(bitmapScaled);
+        }
     }
 }

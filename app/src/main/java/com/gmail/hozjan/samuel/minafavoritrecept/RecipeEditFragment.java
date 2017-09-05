@@ -27,6 +27,8 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private static final int REQUEST_PHOTO = 2;
     private Recipe mRecipe;
@@ -165,13 +167,16 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
         }
     }
 
+    // Ta emot resultatet från kamera-appen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHOTO){
+            if (resultCode == RESULT_OK){
             Uri uri = FileProvider.getUriForFile(getActivity(), "com.gmail.hozjan.samuel.minafavoritrecept.fileprovider", mRecipeImageFile);
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updateImageView();
+            }
         }
     }
 }

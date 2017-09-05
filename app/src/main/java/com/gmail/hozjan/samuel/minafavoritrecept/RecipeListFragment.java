@@ -1,6 +1,10 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,9 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -47,6 +54,8 @@ public class RecipeListFragment extends Fragment {
         private TextView mCategoryTextView;
         private ImageView mThumbnailImageView;
         private Recipe mRecipe;
+        private File mRecipeImageFile;
+        private ImageButton mDeleteButton;
 
         public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_recipe, parent, false));
@@ -55,12 +64,26 @@ public class RecipeListFragment extends Fragment {
             mNameTextView = (TextView) itemView.findViewById(R.id.recipe_list_item_name);
             mCategoryTextView = (TextView) itemView.findViewById(R.id.recipe_list_item_category);
             mThumbnailImageView = (ImageView) itemView.findViewById(R.id.recipe_list_item_image);
+            mDeleteButton = (ImageButton)itemView.findViewById(R.id.delete_button);
+
         }
 
         private void bind(Recipe recipe) {
             mRecipe = recipe;
             mNameTextView.setText(mRecipe.getName());
             mCategoryTextView.setText(mRecipe.getCategory());
+            mRecipeImageFile = RecipeStorage.get(getActivity()).getImageFile(recipe);
+            updateImageView();
+
+            // kanske kan använda den vanliga onclick-listenern istället och bara köra en if-sats om man klickar på papperskorg-knappen.
+            //Else starta ny recipefragment.
+            mDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
             //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.matratt_test));
         }
 
@@ -68,6 +91,27 @@ public class RecipeListFragment extends Fragment {
         public void onClick(View v) {
             Intent intent = RecipeActivity.newIntent(getActivity(), mRecipe.getId());
             startActivity(intent);
+        }
+        private void updateImageView(){
+            if (mRecipeImageFile == null || !mRecipeImageFile.exists()){
+                //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_image));
+                //mThumbnailImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                Drawable dr = getResources().getDrawable(R.drawable.matratt_test);
+                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 170, 120, true));
+                mThumbnailImageView.setImageDrawable(d);
+            }else {
+                //Bitmap bitmap = ImageHandler.getScaleBitMap(mRecipeImageFile.getPath(),135,180);
+
+                //Läs in bilden som nu bör finnas där vi sa att den skulle placeras
+                Bitmap bm= BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
+
+                //Skala om bilden så att den passar i imageviewn
+                Bitmap bm2=Bitmap.createScaledBitmap(bm,
+                        170, 120,
+                        true);
+                mThumbnailImageView.setImageBitmap(bm2);
+            }
         }
     }
 

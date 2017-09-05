@@ -53,6 +53,10 @@ public class RecipeStorage {
         mRecipes.add(recipe);
     }
 
+    public void deleteRecipe(Recipe recipe){
+        mRecipes.remove(recipe);
+    }
+
     public File getImageFile(Recipe recipe){
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, recipe.getImageFilename());
