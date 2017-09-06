@@ -247,15 +247,43 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
             mIngredientCategorySpinner = (Spinner)itemView.findViewById(R.id.ingredient_categoryspinner);
             mIngredientDeleteButton = (ImageButton)itemView.findViewById(R.id.ingredient_delete_button);
         }
-        public void bind(Ingredient ingredient){
+        public void bind(final Ingredient ingredient){
             mIngredient = ingredient;
             mIngredientNameEditText.setText(mIngredient.getName());
-
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             mIngredientCategorySpinner.setAdapter(adapter);
             //mIngredientCategorySpinner.setOnItemSelectedListener(this);
             mIngredientCategorySpinner.setSelection(getSpinnerIndex(mIngredientCategorySpinner, mIngredient.getCategory()));
+
+            mIngredientDeleteButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Varning!");
+                    if (mIngredient.getName() != null) {
+                        alert.setMessage("Är du säker på att du vill ta bort Ingrediensen " + "\"" + mIngredient.getName() + "\"");
+                    }else {
+                        alert.setMessage("Är du säker på att du vill ta bort den namnlösa Ingrediensen?");
+                    }
+                    alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mRecipe.removeIngredient(mIngredient);
+                            mAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setNegativeButton("NEJ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
+                }
+            });
         }
 
 

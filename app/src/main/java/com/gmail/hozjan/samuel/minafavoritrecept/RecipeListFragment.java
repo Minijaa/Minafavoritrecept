@@ -27,10 +27,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.List;
 
-/**
- * Created by KOS on 2017-08-26.
- */
-
 public class RecipeListFragment extends Fragment {
     private RecyclerView mRecipeRecyclerView;
     private RecipeAdapter mAdapter;

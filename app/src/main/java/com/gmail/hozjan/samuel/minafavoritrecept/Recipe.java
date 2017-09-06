@@ -22,8 +22,12 @@ public class Recipe {
     public Recipe(){
         mId = UUID.randomUUID();
         mIngredients = new ArrayList<>();
-        Ingredient i = new Ingredient("namn", "Ost");
-        mIngredients.add(i);
+        Ingredient i1 = new Ingredient("1 Kyckling", "Kött och Chark");
+        Ingredient i2 = new Ingredient("1kg Pasta", "asd");
+        Ingredient i3 = new Ingredient("1 Husshållsost", "Ost");
+        mIngredients.add(i1);
+        mIngredients.add(i2);
+        mIngredients.add(i3);
     }
 
 //    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
@@ -106,6 +110,9 @@ public class Recipe {
             ingredients += i.getName() + "\n";
         }
         return ingredients;
+    }
+    public void removeIngredient(Ingredient ingredient){
+        mIngredients.remove(ingredient);
     }
 }
 
