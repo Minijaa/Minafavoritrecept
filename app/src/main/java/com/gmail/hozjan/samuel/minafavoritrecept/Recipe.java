@@ -15,26 +15,23 @@ public class Recipe {
     private String mName;
     private String mDescription;
     private String mCategory;
-    private File mImage;
     private String mIngrediences;
     private int mPortions;
     private int mTimeRequired;
     //private ArrayList<Ingredient> mIngrediences;
-    private Date mDateAdded;
 
     public Recipe(){
         mId = UUID.randomUUID();
     }
 
-    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
-        this.mName = mName;
-        this.mDescription = mDescription;
-        this.mPortions = mPortions;
-        this.mTimeRequired = mTimeRequired;
-        mId = UUID.randomUUID();
-        mDateAdded = new Date();
-
-    }
+//    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
+//        this.mName = mName;
+//        this.mDescription = mDescription;
+//        this.mPortions = mPortions;
+//        this.mTimeRequired = mTimeRequired;
+//        mId = UUID.randomUUID();
+//
+//    }
 
     public UUID getId() {
         return mId;
@@ -93,13 +90,5 @@ public class Recipe {
 
     public String getImageFilename(){
         return "IMG_" + getId().toString() + ".jpg";
-    }
-
-    public File getImage() {
-        return mImage;
-    }
-
-    public void setImage(File image) {
-        mImage = image;
     }
 }

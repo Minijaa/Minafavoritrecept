@@ -1,6 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -11,9 +12,13 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,15 +47,13 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
     private ImageView mRecipeImageView;
 
 
-
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeEditActivity.EXTRA_RECIPE_ID);
         mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
         mRecipeImageFile = RecipeStorage.get(getActivity()).getImageFile(mRecipe);
+        setHasOptionsMenu(true);
 
     }
 
@@ -84,9 +87,9 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
         PackageManager packageManager = getActivity().getPackageManager();
-        mRecipeImageView = (ImageView)v.findViewById(R.id.edit_recipe_image);
+        mRecipeImageView = (ImageView) v.findViewById(R.id.edit_recipe_image);
         updateImageView();
-        mPhotoButton = (ImageButton)v.findViewById(R.id.edit_photo_button);
+        mPhotoButton = (ImageButton) v.findViewById(R.id.edit_photo_button);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mRecipeImageFile != null && captureImage.resolveActivity(packageManager) != null;
         mPhotoButton.setEnabled(canTakePhoto);
@@ -97,14 +100,14 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
                 captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 List<ResolveInfo> cameraActivites = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
 
-                for (ResolveInfo activity : cameraActivites){
+                for (ResolveInfo activity : cameraActivites) {
                     getActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
                 startActivityForResult(captureImage, REQUEST_PHOTO);
             }
         });
 
-        mIngrediences = (EditText)v.findViewById(R.id.edit_recipe_ingrediences);
+        mIngrediences = (EditText) v.findViewById(R.id.edit_recipe_ingrediences);
         mIngrediences.setText(mRecipe.getIngrediences());
         mIngrediences.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,7 +125,7 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
             }
         });
-        mInsctructions = (EditText)v.findViewById(R.id.edit_recipe_description);
+        mInsctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
         mInsctructions.setText(mRecipe.getDescription());
         mInsctructions.addTextChangedListener(new TextWatcher() {
             @Override
@@ -140,28 +143,30 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
             }
         });
-        Spinner categorySpinner = (Spinner)v.findViewById(R.id.recipe_edit_categoryspinner);
+        Spinner categorySpinner = (Spinner) v.findViewById(R.id.recipe_edit_categoryspinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.category_choices, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         categorySpinner.setAdapter(adapter);
         categorySpinner.setOnItemSelectedListener(this);
+
 
         return v;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mRecipe.setCategory((String)parent.getItemAtPosition(position));
+        mRecipe.setCategory((String) parent.getItemAtPosition(position));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    private void updateImageView(){
-        if (mRecipeImageFile == null || !mRecipeImageFile.exists()){
+
+    private void updateImageView() {
+        if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
             mRecipeImageView.setImageDrawable(null);
-            }else {
+        } else {
             Bitmap bitmap = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmap);
         }
@@ -171,12 +176,57 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PHOTO){
-            if (resultCode == RESULT_OK){
-            Uri uri = FileProvider.getUriForFile(getActivity(), "com.gmail.hozjan.samuel.minafavoritrecept.fileprovider", mRecipeImageFile);
-            getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            updateImageView();
+        if (requestCode == REQUEST_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = FileProvider.getUriForFile(getActivity(), "com.gmail.hozjan.samuel.minafavoritrecept.fileprovider", mRecipeImageFile);
+                getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                updateImageView();
             }
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_recipe_edit, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.appbar_delete_recipe_button) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle("Varning!");
+            if (mRecipe.getName() != null) {
+                alert.setMessage("Är du säker på att du vill ta bort receptet " + "\"" + mRecipe.getName() + "\"");
+            } else {
+                alert.setMessage("Är du säker på att du vill ta bort det namnlösa receptet?");
+            }
+            alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
+                    dialog.dismiss();
+                    getActivity().finish();
+                }
+            });
+
+            alert.setNegativeButton("NEJ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+
+        }
+        return super.onOptionsItemSelected(item);
+
+
+        //Intent intent = RecipeEditActivity.newIntent(getActivity(), mRecipe.getId());
+        //startActivity(intent);
+
+    }
+
+
 }
+

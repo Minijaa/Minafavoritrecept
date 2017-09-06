@@ -84,17 +84,25 @@ public class RecipeFragment extends Fragment {
     }
 
     public void updateUI() {
-        mNameField.setText(mRecipe.getName());
-        mRecipeCategory.setText(mRecipe.getCategory());
-        mIngrediences.setText(mRecipe.getIngrediences());
-        mInsctructions.setText(mRecipe.getDescription());
-        updateImageView();
+        UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
+        mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
+        if (mRecipe != null) {
+            mNameField.setText(mRecipe.getName());
+            mRecipeCategory.setText(mRecipe.getCategory());
+            mIngrediences.setText(mRecipe.getIngrediences());
+            mInsctructions.setText(mRecipe.getDescription());
+            updateImageView();
+        }else {
+            getActivity().finish();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         updateUI();
+
+
     }
 
     private void updateImageView() {

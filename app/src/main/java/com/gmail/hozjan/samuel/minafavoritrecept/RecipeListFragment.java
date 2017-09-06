@@ -1,5 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,11 +83,30 @@ public class RecipeListFragment extends Fragment {
             mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
-                    mAdapter.notifyDataSetChanged();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Varning!");
+                    if (mRecipe.getName() != null) {
+                        alert.setMessage("Är du säker på att du vill ta bort receptet " + "\"" + mRecipe.getName() + "\"");
+                    }else {
+                        alert.setMessage("Är du säker på att du vill ta bort det namnlösa receptet?");
+                    }
+                    alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
+                            mAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setNegativeButton("NEJ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                alert.show();
                 }
             });
-            //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.matratt_test));
         }
 
         @Override
