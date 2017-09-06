@@ -2,26 +2,19 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.UUID;
@@ -58,7 +51,7 @@ public class RecipeFragment extends Fragment {
         mRecipeCategory = (TextView) v.findViewById(R.id.recipe_category);
         mRecipeCategory.setText(mRecipe.getCategory());
         mIngrediences = (TextView) v.findViewById(R.id.recipe_ingrediences);
-        mIngrediences.setText(mRecipe.getIngrediences());
+        mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
         mInsctructions = (TextView) v.findViewById(R.id.recipe_instructions);
         mInsctructions.setText(mRecipe.getDescription());
         mRecipeImageView = (ImageView) v.findViewById(R.id.recipe_image);
@@ -89,7 +82,7 @@ public class RecipeFragment extends Fragment {
         if (mRecipe != null) {
             mNameField.setText(mRecipe.getName());
             mRecipeCategory.setText(mRecipe.getCategory());
-            mIngrediences.setText(mRecipe.getIngrediences());
+            mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
             mInsctructions.setText(mRecipe.getDescription());
             updateImageView();
         }else {

@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -38,11 +40,11 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
     private static final int REQUEST_PHOTO = 2;
     private Recipe mRecipe;
     private EditText mRecipeName;
+    private RecyclerView mIngredientsRecyclerView;
     private EditText mInsctructions;
-    private EditText mIngrediences;
+    //private EditText mIngrediences;
     private File mRecipeImageFile;
-
-
+    private IngredientAdapter mAdapter;
     private ImageButton mPhotoButton;
     private ImageView mRecipeImageView;
 
@@ -107,24 +109,27 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
 
-        mIngrediences = (EditText) v.findViewById(R.id.edit_recipe_ingrediences);
-        mIngrediences.setText(mRecipe.getIngrediences());
-        mIngrediences.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        mIngrediences = (EditText) v.findViewById(R.id.edit_recipe_ingrediences);
+//        mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
+//        mIngrediences.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                mRecipe.setIngrediencesTEMPREMOVESOON(s.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+        mIngredientsRecyclerView = (RecyclerView)v.findViewById(R.id.ingredients_recycler_view);
+        mIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mRecipe.setIngrediences(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         mInsctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
         mInsctructions.setText(mRecipe.getDescription());
         mInsctructions.addTextChangedListener(new TextWatcher() {
@@ -148,6 +153,9 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         categorySpinner.setAdapter(adapter);
         categorySpinner.setOnItemSelectedListener(this);
+        categorySpinner.setSelection(getSpinnerIndex(categorySpinner, mRecipe.getCategory()));
+
+        updateUI();
 
 
         return v;
@@ -225,6 +233,71 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
         //Intent intent = RecipeEditActivity.newIntent(getActivity(), mRecipe.getId());
         //startActivity(intent);
 
+    }
+
+    private class IngredientHolder extends RecyclerView.ViewHolder{
+        private EditText mIngredientNameEditText;
+        private Spinner mIngredientCategorySpinner;
+        private ImageButton mIngredientDeleteButton;
+        private Ingredient mIngredient;
+
+        public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_ingredient, parent, false));
+            mIngredientNameEditText = (EditText)itemView.findViewById(R.id.ingredient_name_edittext);
+            mIngredientCategorySpinner = (Spinner)itemView.findViewById(R.id.ingredient_categoryspinner);
+            mIngredientDeleteButton = (ImageButton)itemView.findViewById(R.id.ingredient_delete_button);
+        }
+        public void bind(Ingredient ingredient){
+            mIngredient = ingredient;
+            mIngredientNameEditText.setText(mIngredient.getName());
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            mIngredientCategorySpinner.setAdapter(adapter);
+            //mIngredientCategorySpinner.setOnItemSelectedListener(this);
+            mIngredientCategorySpinner.setSelection(getSpinnerIndex(mIngredientCategorySpinner, mIngredient.getCategory()));
+        }
+
+
+    }
+    private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder>{
+        private List<Ingredient> mIngredients;
+
+        public IngredientAdapter(List<Ingredient> ingredients){
+            mIngredients = ingredients;
+        }
+
+        @Override
+        public IngredientHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new IngredientHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(IngredientHolder holder, int position) {
+            Ingredient ingredient = mIngredients.get(position);
+            holder.bind(ingredient);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mIngredients.size();
+        }
+    }
+    private void updateUI(){
+        List<Ingredient> ingredients = mRecipe.getIngredients();
+        mAdapter = new IngredientAdapter(ingredients);
+        mIngredientsRecyclerView.setAdapter(mAdapter);
+    }
+    private int getSpinnerIndex(Spinner spinner, String searchString) {
+        int index = 0;
+
+        for (int i = 0; i < spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(searchString)){
+                index = i;
+            }
+        }
+        return index;
     }
 
 

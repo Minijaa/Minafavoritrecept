@@ -1,8 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -15,13 +14,16 @@ public class Recipe {
     private String mName;
     private String mDescription;
     private String mCategory;
-    private String mIngrediences;
+    private String mIngrediencesTEMPREMOVESOON;
+    private ArrayList<Ingredient> mIngredients;
     private int mPortions;
     private int mTimeRequired;
-    //private ArrayList<Ingredient> mIngrediences;
 
     public Recipe(){
         mId = UUID.randomUUID();
+        mIngredients = new ArrayList<>();
+        Ingredient i = new Ingredient("namn", "Ost");
+        mIngredients.add(i);
     }
 
 //    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
@@ -80,15 +82,30 @@ public class Recipe {
     public void setTimeRequired(int timeRequired) {
         mTimeRequired = timeRequired;
     }
-    public String getIngrediences() {
-        return mIngrediences;
+    public String getIngrediencesTEMPREMOVESOON() {
+        return mIngrediencesTEMPREMOVESOON;
     }
 
-    public void setIngrediences(String ingrediences) {
-        mIngrediences = ingrediences;
+    public void setIngrediencesTEMPREMOVESOON(String ingrediencesTEMPREMOVESOON) {
+        mIngrediencesTEMPREMOVESOON = ingrediencesTEMPREMOVESOON;
     }
 
     public String getImageFilename(){
         return "IMG_" + getId().toString() + ".jpg";
     }
+
+    public void addIngredient(Ingredient ingredient){
+        mIngredients.add(ingredient);
+    }
+    public List<Ingredient> getIngredients(){
+        return mIngredients;
+    }
+    public String getIngredientsAsString(){
+        String ingredients = "";
+        for (Ingredient i : mIngredients){
+            ingredients += i.getName() + "\n";
+        }
+        return ingredients;
+    }
 }
+
