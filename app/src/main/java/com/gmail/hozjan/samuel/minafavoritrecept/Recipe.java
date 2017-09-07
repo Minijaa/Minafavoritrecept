@@ -4,40 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by KOS on 2017-08-23.
- */
-
 public class Recipe {
 
     private UUID mId;
     private String mName;
     private String mDescription;
     private String mCategory;
-    private String mIngrediencesTEMPREMOVESOON;
     private ArrayList<Ingredient> mIngredients;
     private int mPortions;
     private int mTimeRequired;
 
-    public Recipe(){
+    public Recipe() {
         mId = UUID.randomUUID();
         mIngredients = new ArrayList<>();
-        Ingredient i1 = new Ingredient("1 Kyckling", "Kött och Chark");
-        Ingredient i2 = new Ingredient("1kg Pasta", "asd");
-        Ingredient i3 = new Ingredient("1 Husshållsost", "Ost");
-        mIngredients.add(i1);
-        mIngredients.add(i2);
-        mIngredients.add(i3);
     }
-
-//    public Recipe(String mName, String mDescription, int mPortions, int mTimeRequired){
-//        this.mName = mName;
-//        this.mDescription = mDescription;
-//        this.mPortions = mPortions;
-//        this.mTimeRequired = mTimeRequired;
-//        mId = UUID.randomUUID();
-//
-//    }
 
     public UUID getId() {
         return mId;
@@ -86,32 +66,33 @@ public class Recipe {
     public void setTimeRequired(int timeRequired) {
         mTimeRequired = timeRequired;
     }
-    public String getIngrediencesTEMPREMOVESOON() {
-        return mIngrediencesTEMPREMOVESOON;
-    }
 
-    public void setIngrediencesTEMPREMOVESOON(String ingrediencesTEMPREMOVESOON) {
-        mIngrediencesTEMPREMOVESOON = ingrediencesTEMPREMOVESOON;
-    }
-
-    public String getImageFilename(){
+    public String getImageFilename() {
         return "IMG_" + getId().toString() + ".jpg";
     }
 
-    public void addIngredient(Ingredient ingredient){
+    public void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
-    public List<Ingredient> getIngredients(){
+
+    public List<Ingredient> getIngredients() {
         return mIngredients;
     }
-    public String getIngredientsAsString(){
+
+    public String getIngredientsAsString() {
         String ingredients = "";
-        for (Ingredient i : mIngredients){
-            ingredients += i.getName() + "\n";
+        for (Ingredient i : mIngredients) {
+            if (i.getName() != null) {
+                ingredients += i.getName() + "\n";
+            }
         }
+        StringBuilder strB = new StringBuilder(ingredients);
+        strB.deleteCharAt(ingredients.length() - 1);
+        ingredients = strB.toString();
         return ingredients;
     }
-    public void removeIngredient(Ingredient ingredient){
+
+    public void removeIngredient(Ingredient ingredient) {
         mIngredients.remove(ingredient);
     }
 }

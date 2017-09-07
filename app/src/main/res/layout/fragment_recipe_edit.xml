@@ -1,8 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/recipe_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="false">
+
+<LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="16dp"
+              android:layout_marginLeft="0dp"
+              android:layout_marginRight="0dp"
               android:layout_marginTop="16dp"
               android:orientation="vertical"
               tools:context="com.gmail.hozjan.samuel.minafavoritrecept.RecipeEditFragment">
@@ -19,6 +27,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
                 android:id="@+id/edit_recipe_image"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
@@ -29,8 +39,9 @@
 
             <ImageButton
                 android:id="@+id/edit_photo_button"
-                android:layout_width="match_parent"
+                android:layout_width="88dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:src="@android:drawable/ic_menu_camera"/>
 
         </LinearLayout>
@@ -53,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/recipe_name_hint"
-                android:paddingLeft="8dp"/>
+                android:paddingLeft="8dp"
+                android:layout_marginRight="16dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,7 +75,7 @@
 
             <Spinner
                 android:id="@+id/recipe_edit_categoryspinner"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 />
@@ -72,27 +84,67 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="0dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="0dp"
-        android:text="@string/recipe_ingredient_label"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="111dp"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="8dp"
+            android:textSize="16sp"
+            android:text="@string/recipe_ingredient_label"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:id="@+id/textView2"/>
+
+        <ImageButton
+            android:id="@+id/edit_add_ingredient_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"/>
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredients_recycler_view"
         android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_weight="1"/>
-
+        android:layout_weight="1"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="8dp"
+        android:nestedScrollingEnabled="false"
+        />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="0dp"
-        android:paddingTop="8dp"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"
         android:text="@string/recipe_description_label"
+
         />
 
     <EditText
@@ -100,6 +152,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/recipe_description_hint"
-        android:paddingLeft="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         />
+
 </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>

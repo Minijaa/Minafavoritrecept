@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="ingredient_category_choices">
-        <item>Bröd</item>
+        <item>Övrigt</item>
         <item>Mejeri</item>
         <item>Frukt och grönt</item>
         <item>Kött och chark</item>
         <item>Fisk och skaldjur</item>
         <item>Ost</item>
-        <item>Bageri</item>
+        <item>Bröd</item>
         <item>Ost</item>
         <item>Skafferi</item>
         <item>Glutenfritt</item>
         <item>Dryck</item>
         <item>Fryst</item>
+        <item>Bageri</item>
         <item>Godis och läsk</item>
         <item>Snacks</item>
         <item>Barnmat och tillbehör</item>
         <item>Hem och husgeråd</item>
         <item>Läkemedel</item>
         <item>Tobak</item>
-        <item>Övrigt</item>
     </string-array>
 
 </resources>

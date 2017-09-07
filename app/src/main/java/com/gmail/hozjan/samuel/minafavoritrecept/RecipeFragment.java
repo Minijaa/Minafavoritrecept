@@ -51,7 +51,7 @@ public class RecipeFragment extends Fragment {
         mRecipeCategory = (TextView) v.findViewById(R.id.recipe_category);
         mRecipeCategory.setText(mRecipe.getCategory());
         mIngrediences = (TextView) v.findViewById(R.id.recipe_ingrediences);
-        mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
+        mIngrediences.setText(mRecipe.getIngredientsAsString());
         mInsctructions = (TextView) v.findViewById(R.id.recipe_instructions);
         mInsctructions.setText(mRecipe.getDescription());
         mRecipeImageView = (ImageView) v.findViewById(R.id.recipe_image);
@@ -82,7 +82,7 @@ public class RecipeFragment extends Fragment {
         if (mRecipe != null) {
             mNameField.setText(mRecipe.getName());
             mRecipeCategory.setText(mRecipe.getCategory());
-            mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
+            mIngrediences.setText(mRecipe.getIngredientsAsString());
             mInsctructions.setText(mRecipe.getDescription());
             updateImageView();
         }else {

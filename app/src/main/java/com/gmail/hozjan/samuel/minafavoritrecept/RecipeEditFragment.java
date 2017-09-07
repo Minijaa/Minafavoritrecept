@@ -36,17 +36,17 @@ import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
-public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class RecipeEditFragment extends Fragment {
     private static final int REQUEST_PHOTO = 2;
     private Recipe mRecipe;
     private EditText mRecipeName;
     private RecyclerView mIngredientsRecyclerView;
     private EditText mInsctructions;
-    //private EditText mIngrediences;
     private File mRecipeImageFile;
     private IngredientAdapter mAdapter;
     private ImageButton mPhotoButton;
     private ImageView mRecipeImageView;
+    private ImageButton mAddIngredientButton;
 
 
     @Override
@@ -59,9 +59,7 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
     }
 
-    public RecipeEditFragment() {
-        // Required empty public constructor
-    }
+    public RecipeEditFragment() {}
 
 
     @Override
@@ -109,25 +107,15 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
 
-//        mIngrediences = (EditText) v.findViewById(R.id.edit_recipe_ingrediences);
-//        mIngrediences.setText(mRecipe.getIngrediencesTEMPREMOVESOON());
-//        mIngrediences.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                mRecipe.setIngrediencesTEMPREMOVESOON(s.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-        mIngredientsRecyclerView = (RecyclerView)v.findViewById(R.id.ingredients_recycler_view);
+        mAddIngredientButton = (ImageButton) v.findViewById(R.id.edit_add_ingredient_button);
+        mAddIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecipe.addIngredient(new Ingredient());
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        mIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.ingredients_recycler_view);
         mIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mInsctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
@@ -152,24 +140,22 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.category_choices, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         categorySpinner.setAdapter(adapter);
-        categorySpinner.setOnItemSelectedListener(this);
         categorySpinner.setSelection(getSpinnerIndex(categorySpinner, mRecipe.getCategory()));
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mRecipe.setCategory((String) parent.getItemAtPosition(position));
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        }
+        );
         updateUI();
-
-
         return v;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mRecipe.setCategory((String) parent.getItemAtPosition(position));
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
@@ -235,7 +221,7 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
     }
 
-    private class IngredientHolder extends RecyclerView.ViewHolder{
+    private class IngredientHolder extends RecyclerView.ViewHolder {
         private EditText mIngredientNameEditText;
         private Spinner mIngredientCategorySpinner;
         private ImageButton mIngredientDeleteButton;
@@ -243,20 +229,47 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
         public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_ingredient, parent, false));
-            mIngredientNameEditText = (EditText)itemView.findViewById(R.id.ingredient_name_edittext);
-            mIngredientCategorySpinner = (Spinner)itemView.findViewById(R.id.ingredient_categoryspinner);
-            mIngredientDeleteButton = (ImageButton)itemView.findViewById(R.id.ingredient_delete_button);
+            mIngredientNameEditText = (EditText) itemView.findViewById(R.id.ingredient_name_edittext);
+            mIngredientCategorySpinner = (Spinner) itemView.findViewById(R.id.ingredient_categoryspinner);
+            mIngredientDeleteButton = (ImageButton) itemView.findViewById(R.id.ingredient_delete_button);
         }
-        public void bind(final Ingredient ingredient){
+
+        public void bind(final Ingredient ingredient) {
             mIngredient = ingredient;
             mIngredientNameEditText.setText(mIngredient.getName());
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             mIngredientCategorySpinner.setAdapter(adapter);
-            //mIngredientCategorySpinner.setOnItemSelectedListener(this);
             mIngredientCategorySpinner.setSelection(getSpinnerIndex(mIngredientCategorySpinner, mIngredient.getCategory()));
+            mIngredientCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
-            mIngredientDeleteButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mIngredient.setCategory((String)parent.getItemAtPosition(position));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            mIngredientNameEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    mIngredient.setName(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+
+            mIngredientDeleteButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -264,7 +277,7 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
                     alert.setTitle("Varning!");
                     if (mIngredient.getName() != null) {
                         alert.setMessage("Är du säker på att du vill ta bort Ingrediensen " + "\"" + mIngredient.getName() + "\"");
-                    }else {
+                    } else {
                         alert.setMessage("Är du säker på att du vill ta bort den namnlösa Ingrediensen?");
                     }
                     alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
@@ -288,10 +301,11 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
 
 
     }
-    private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder>{
+
+    private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
 
-        public IngredientAdapter(List<Ingredient> ingredients){
+        public IngredientAdapter(List<Ingredient> ingredients) {
             mIngredients = ingredients;
         }
 
@@ -312,16 +326,18 @@ public class RecipeEditFragment extends Fragment implements AdapterView.OnItemSe
             return mIngredients.size();
         }
     }
-    private void updateUI(){
+
+    private void updateUI() {
         List<Ingredient> ingredients = mRecipe.getIngredients();
         mAdapter = new IngredientAdapter(ingredients);
         mIngredientsRecyclerView.setAdapter(mAdapter);
     }
+
     private int getSpinnerIndex(Spinner spinner, String searchString) {
         int index = 0;
 
-        for (int i = 0; i < spinner.getCount(); i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(searchString)){
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(searchString)) {
                 index = i;
             }
         }
