@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +40,7 @@ import java.util.UUID;
 import static android.app.Activity.RESULT_OK;
 
 public class RecipeEditFragment extends Fragment {
-    private static final int REQUEST_PHOTO = 2;
+    private static final int REQUEST_PHOTO = 1;
     private Recipe mRecipe;
     private EditText mRecipeName;
     private RecyclerView mIngredientsRecyclerView;
@@ -156,10 +159,11 @@ public class RecipeEditFragment extends Fragment {
         return v;
     }
 
-
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
-            mRecipeImageView.setImageDrawable(null);
+            Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
+            Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+            mRecipeImageView.setImageBitmap(bitmap);
         } else {
             Bitmap bitmap = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmap);
@@ -214,10 +218,6 @@ public class RecipeEditFragment extends Fragment {
 
         }
         return super.onOptionsItemSelected(item);
-
-
-        //Intent intent = RecipeEditActivity.newIntent(getActivity(), mRecipe.getId());
-        //startActivity(intent);
 
     }
 

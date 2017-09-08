@@ -32,7 +32,6 @@
                 android:id="@+id/edit_recipe_image"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
-                android:background="@color/colorPrimaryDark"
                 android:cropToPadding="true"
                 android:scaleType="centerInside"
                 />

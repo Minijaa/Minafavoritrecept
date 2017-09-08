@@ -11,8 +11,6 @@ public class Recipe {
     private String mDescription;
     private String mCategory;
     private ArrayList<Ingredient> mIngredients;
-    private int mPortions;
-    private int mTimeRequired;
 
     public Recipe() {
         mId = UUID.randomUUID();
@@ -51,22 +49,6 @@ public class Recipe {
         this.mCategory = mCategory;
     }
 
-    public int getPortions() {
-        return mPortions;
-    }
-
-    public void setPortions(int portions) {
-        mPortions = portions;
-    }
-
-    public int getTimeRequired() {
-        return mTimeRequired;
-    }
-
-    public void setTimeRequired(int timeRequired) {
-        mTimeRequired = timeRequired;
-    }
-
     public String getImageFilename() {
         return "IMG_" + getId().toString() + ".jpg";
     }
@@ -86,9 +68,11 @@ public class Recipe {
                 ingredients += i.getName() + "\n";
             }
         }
-        StringBuilder strB = new StringBuilder(ingredients);
-        strB.deleteCharAt(ingredients.length() - 1);
-        ingredients = strB.toString();
+        if (!ingredients.equals("")) {
+            StringBuilder strB = new StringBuilder(ingredients);
+            strB.deleteCharAt(ingredients.length() - 1);
+            ingredients = strB.toString();
+        }
         return ingredients;
     }
 

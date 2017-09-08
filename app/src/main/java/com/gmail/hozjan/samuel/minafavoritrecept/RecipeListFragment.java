@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
@@ -114,7 +113,7 @@ public class RecipeListFragment extends Fragment {
             if (mRecipeImageFile == null || !mRecipeImageFile.exists()){
                 //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_image));
                 //mThumbnailImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                Drawable dr = getResources().getDrawable(R.drawable.matratt_test);
+                Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
                 Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
                 Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 170, 120, true));
                 mThumbnailImageView.setImageDrawable(d);

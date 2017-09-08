@@ -11,12 +11,7 @@ public class Ingredient {
     public Ingredient(){
         mId = UUID.randomUUID();
     }
-    // Tillfällig konstruktor. Ta bort.
-    public Ingredient(String name, String categoryName){
-        mId = UUID.randomUUID();
-        mName = name;
-        mCategory = categoryName;
-    }
+
     public String getName() {
         return mName;
     }

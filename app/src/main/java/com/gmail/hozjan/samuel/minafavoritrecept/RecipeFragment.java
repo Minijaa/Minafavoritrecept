@@ -19,10 +19,6 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.UUID;
 
-/**
- * Created by KOS on 2017-08-25.
- */
-
 public class RecipeFragment extends Fragment {
     private Recipe mRecipe;
     private TextView mNameField;
@@ -101,7 +97,7 @@ public class RecipeFragment extends Fragment {
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
             //mRecipeImageView.setImageDrawable(null);
-            Drawable dr = getResources().getDrawable(R.drawable.matratt_test);
+            Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
             Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
             Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 360, 240, true));
             mRecipeImageView.setImageDrawable(d);

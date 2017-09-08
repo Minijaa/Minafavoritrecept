@@ -9,12 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeActivity">
-        </activity>
-        <activity android:name=".RecipeEditActivity">
+        <activity
+            android:launchMode="singleTop"
+            android:name=".RecipeActivity"
+            android:parentActivityName=".RecipeListActivity">
 
         </activity>
-        <activity android:name=".RecipeListActivity">
+        <activity
+            android:name=".RecipeEditActivity"
+            android:parentActivityName=".RecipeActivity">
+        </activity>
+        <activity
+            android:name=".RecipeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

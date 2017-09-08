@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by KOS on 2017-08-26.
- */
-
 public class RecipeStorage {
     private static RecipeStorage sRecipestorage;
     private List<Recipe> mRecipes;
@@ -27,13 +23,6 @@ public class RecipeStorage {
     private RecipeStorage(Context context){
         mRecipes = new ArrayList<>();
         mContext = context.getApplicationContext();
-//        for (int i = 0; i<100;i++){
-//            Recipe r = new Recipe();
-//            r.setmName("Recept #" + i);
-//            r.setCategory("Kötträtter");
-//            mRecipes.add(r);
-//        }
-
     }
 
     public List<Recipe> getRecipes(){
