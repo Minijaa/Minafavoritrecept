@@ -1,10 +1,11 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Recipe {
+public class Recipe implements Serializable{
 
     private UUID mId;
     private String mName;

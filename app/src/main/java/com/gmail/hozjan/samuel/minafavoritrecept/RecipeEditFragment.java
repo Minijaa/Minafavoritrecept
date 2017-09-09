@@ -344,6 +344,16 @@ public class RecipeEditFragment extends Fragment {
         return index;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        RecipeStorage.get(getActivity()).storeData();
+    }
 
+    //@Override
+    //public void onStop() {
+    //    super.onStop();
+    //    RecipeStorage.get(getActivity()).storeData();
+    //}
 }
 
