@@ -6,14 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class RecipeListActivity extends SingleFragmentActivity {
+import java.util.UUID;
+
+public class ShoppingListActivity extends SingleFragmentActivity {
     public static Intent newIntent(Context packageContext){
-        Intent intent = new Intent(packageContext, RecipeListActivity.class);
+        Intent intent = new Intent(packageContext, ShoppingListActivity.class);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        return new RecipeListFragment();
+        return new ShoppingListFragment();
     }
 }

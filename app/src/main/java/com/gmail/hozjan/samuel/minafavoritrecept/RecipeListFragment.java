@@ -186,6 +186,9 @@ public class RecipeListFragment extends Fragment {
             Intent intent = RecipeEditActivity.newIntent(getActivity(), recipe.getId());
             startActivity(intent);
             return true;
+        }else if (item.getItemId() == R.id.navigate_to_shoppinglists){
+            Intent intent = ShoppingListActivity.newIntent(getActivity());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

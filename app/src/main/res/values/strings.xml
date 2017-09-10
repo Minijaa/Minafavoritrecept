@@ -10,4 +10,5 @@
     <string name="recipe_ingredient_label">Ingredienser</string>
     <string name="recipe_description_label">Instruktioner</string>
     <string name="edit_recipe">Ändra recept</string>
+
 </resources>

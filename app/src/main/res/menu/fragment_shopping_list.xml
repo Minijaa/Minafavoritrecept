@@ -3,15 +3,15 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/navigate_to_shoppinglists"
-        android:icon="@drawable/ic_shopping_cart_white_24dp"
-        android:title="Inköpslistor"
+        android:id="@+id/navigate_to_recipe_list"
+        android:icon="@android:drawable/btn_star"
+        android:title="Recept"
         app:showAsAction="ifRoom|withText"
         ></item>
     <item
-        android:id="@+id/new_recipe"
+        android:id="@+id/new_shoppinglist"
         android:icon="@drawable/ic_menu_add"
-        android:title="@string/new_recipe"
+        android:title="Ny inköpslista"
         app:showAsAction="ifRoom|withText"
         >
 

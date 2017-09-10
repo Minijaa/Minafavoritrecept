@@ -36,6 +36,7 @@ public class RecipeStorage {
         return mRecipes;
     }
 
+    //Borde göra om till en TreeMap som sorterar på recept-namnet.
     public Recipe getRecipe(UUID id) {
         for (Recipe recipe : mRecipes) {
             if (recipe.getId().equals(id)) {
