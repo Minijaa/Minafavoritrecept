@@ -16,6 +16,8 @@ import java.util.UUID;
 public class RecipeStorage {
     private static RecipeStorage sRecipestorage;
     private List<Recipe> mRecipes;
+    private List<ShoppingList> mShoppingLists;
+
     private Context mContext;
     public static final String mDataFile = "recipe_data.dat";
 
@@ -29,6 +31,7 @@ public class RecipeStorage {
 
     private RecipeStorage(Context context) {
         mRecipes = new ArrayList<>();
+        mShoppingLists = new ArrayList<>();
         mContext = context.getApplicationContext();
     }
 
@@ -91,6 +94,25 @@ public class RecipeStorage {
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, recipe.getImageFilename());
     }
+    public void addShoppingList(ShoppingList shoppingList){
+        mShoppingLists.add(shoppingList);
+    }
 
+    public void deleteShoppingList(ShoppingList shoppingList){
+        mShoppingLists.remove(shoppingList);
+    }
+
+    public List<ShoppingList> getShoppingLists() {
+        return mShoppingLists;
+    }
+
+    public ShoppingList getShoppingList(UUID id) {
+        for (ShoppingList s : mShoppingLists) {
+            if (s.getId().equals(id)) {
+                return s;
+            }
+        }
+        return null;
+    }
 
 }

@@ -40,13 +40,13 @@ public class RecipeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIinstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        mRecipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recycler_view);
+        mRecipeRecyclerView = (RecyclerView) v.findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
 
-        return view;
+        return v;
     }
 
     private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,8 +64,14 @@ public class RecipeListFragment extends Fragment {
             mNameTextView = (TextView) itemView.findViewById(R.id.recipe_list_item_name);
             mCategoryTextView = (TextView) itemView.findViewById(R.id.recipe_list_item_category);
             mThumbnailImageView = (ImageView) itemView.findViewById(R.id.recipe_list_item_image);
-            mDeleteButton = (ImageButton)itemView.findViewById(R.id.delete_button);
+            mDeleteButton = (ImageButton) itemView.findViewById(R.id.delete_button);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = RecipeActivity.newIntent(getActivity(), mRecipe.getId());
+            startActivity(intent);
         }
 
         private void bind(Recipe recipe) {
@@ -84,7 +90,7 @@ public class RecipeListFragment extends Fragment {
                     alert.setTitle("Varning!");
                     if (mRecipe.getName() != null) {
                         alert.setMessage("Är du säker på att du vill ta bort receptet " + "\"" + mRecipe.getName() + "\"");
-                    }else {
+                    } else {
                         alert.setMessage("Är du säker på att du vill ta bort det namnlösa receptet?");
                     }
                     alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
@@ -101,32 +107,28 @@ public class RecipeListFragment extends Fragment {
                             dialog.dismiss();
                         }
                     });
-                alert.show();
+                    alert.show();
                 }
             });
         }
 
-        @Override
-        public void onClick(View v) {
-            Intent intent = RecipeActivity.newIntent(getActivity(), mRecipe.getId());
-            startActivity(intent);
-        }
-        private void updateImageView(){
-            if (mRecipeImageFile == null || !mRecipeImageFile.exists()){
+
+        private void updateImageView() {
+            if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
                 //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_image));
                 //mThumbnailImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
                 Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
                 Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 170, 120, true));
                 mThumbnailImageView.setImageDrawable(d);
-            }else {
+            } else {
                 //Bitmap bitmap = ImageHandler.getScaleBitMap(mRecipeImageFile.getPath(),135,180);
 
                 //Läs in bilden som nu bör finnas där vi sa att den skulle placeras
-                Bitmap bm= BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
+                Bitmap bm = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
 
                 //Skala om bilden så att den passar i imageviewn
-                Bitmap bm2=Bitmap.createScaledBitmap(bm,
+                Bitmap bm2 = Bitmap.createScaledBitmap(bm,
                         170, 120,
                         true);
                 mThumbnailImageView.setImageBitmap(bm2);
@@ -162,10 +164,10 @@ public class RecipeListFragment extends Fragment {
     private void updateUI() {
         RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
         List<Recipe> recipes = recipeStorage.getRecipes();
-        if (mAdapter == null){
+        if (mAdapter == null) {
             mAdapter = new RecipeAdapter(recipes);
             mRecipeRecyclerView.setAdapter(mAdapter);
-        }else{
+        } else {
             mAdapter.notifyDataSetChanged();
         }
 
@@ -186,7 +188,7 @@ public class RecipeListFragment extends Fragment {
             Intent intent = RecipeEditActivity.newIntent(getActivity(), recipe.getId());
             startActivity(intent);
             return true;
-        }else if (item.getItemId() == R.id.navigate_to_shoppinglists){
+        } else if (item.getItemId() == R.id.navigate_to_shoppinglists) {
             Intent intent = ShoppingListActivity.newIntent(getActivity());
             startActivity(intent);
         }

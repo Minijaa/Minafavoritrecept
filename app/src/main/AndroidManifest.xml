@@ -36,8 +36,12 @@
                 android:resource="@xml/files"/>
         </provider>
 
-        <activity android:name=".ShoppingListActivity"
-                  android:label="Mina Inköpslistor">
+        <activity
+            android:name=".ShoppingListActivity"
+            android:label="Mina Inköpslistor">
+        </activity>
+        <activity android:name=".ShoppingActivity"
+            android:label="Min inköpslista">
         </activity>
     </application>
 

@@ -8,9 +8,20 @@ public class Ingredient implements Serializable {
     private UUID mId;
     private String mName;
     private String mCategory;
+    private boolean mIsMarked;
+
+    public boolean isMarked() {
+        return mIsMarked;
+    }
+
+    public void setMarked(boolean marked) {
+        mIsMarked = marked;
+    }
+
 
     public Ingredient(){
         mId = UUID.randomUUID();
+        mIsMarked = false;
     }
 
     public String getName() {

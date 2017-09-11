@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,7 +61,7 @@ public class RecipeEditFragment extends Fragment {
 
     }
 
-    public RecipeEditFragment() {}
+//    public RecipeEditFragment() {}
 
 
     @Override
@@ -229,9 +228,9 @@ public class RecipeEditFragment extends Fragment {
 
         public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_ingredient, parent, false));
-            mIngredientNameEditText = (EditText) itemView.findViewById(R.id.ingredient_name_edittext);
+            mIngredientNameEditText = (EditText) itemView.findViewById(R.id.shopping_ingredient_name_edittext);
             mIngredientCategorySpinner = (Spinner) itemView.findViewById(R.id.ingredient_categoryspinner);
-            mIngredientDeleteButton = (ImageButton) itemView.findViewById(R.id.ingredient_delete_button);
+            mIngredientDeleteButton = (ImageButton) itemView.findViewById(R.id.shopping_ingredient_delete_button);
         }
 
         public void bind(final Ingredient ingredient) {
