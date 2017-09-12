@@ -17,10 +17,9 @@ public class RecipeStorage {
     private static RecipeStorage sRecipestorage;
     private List<Recipe> mRecipes;
     private List<ShoppingList> mShoppingLists;
-
+    private List<Store> mStores;
     private Context mContext;
-    public static final String mRecipeDataFile = "recipe_data.dat";
-    public static final String mShoppingListDataFile = "shoppinglist_data.dat";
+    private static final String mDataFile = "recipe_data.dat";
 
     public static RecipeStorage get(Context context) {
         if (sRecipestorage == null) {
@@ -28,11 +27,10 @@ public class RecipeStorage {
         }
         return sRecipestorage;
     }
-
-
     private RecipeStorage(Context context) {
         mRecipes = new ArrayList<>();
         mShoppingLists = new ArrayList<>();
+        mStores = new ArrayList<>();
         mContext = context.getApplicationContext();
     }
 
@@ -51,24 +49,13 @@ public class RecipeStorage {
     }
 
     public void storeData() {
-//        String mDataFile;
-//        ArrayList<?> mListToSave;
-//        if (dataFile == "shopping"){
-//            mDataFile = mShoppingListDataFile;
-//            mListToSave = new ArrayList<>(mShoppingLists);
-//        }else{
-//            mDataFile = mRecipeDataFile;
-//            mListToSave = new ArrayList<>(mRecipes);
-//        }
-
         try {
-            FileOutputStream outFile = mContext.getApplicationContext().openFileOutput(mRecipeDataFile, Context.MODE_PRIVATE);
+            FileOutputStream outFile = mContext.getApplicationContext().openFileOutput(mDataFile, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(outFile);
             oos.writeObject(mRecipes);
             oos.writeObject(mShoppingLists);
             oos.close();
             outFile.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -78,13 +65,12 @@ public class RecipeStorage {
 
     public void loadData() {
         try {
-            FileInputStream inFile = mContext.getApplicationContext().openFileInput(mRecipeDataFile);
+            FileInputStream inFile = mContext.getApplicationContext().openFileInput(mDataFile);
             ObjectInputStream ois = new ObjectInputStream(inFile);
             mRecipes = (ArrayList) ois.readObject();
             mShoppingLists = (ArrayList) ois.readObject();
             ois.close();
             inFile.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -127,6 +113,15 @@ public class RecipeStorage {
             }
         }
         return null;
+    }
+    public void addStore(Store store){
+        mStores.add(store);
+    }
+    public void deleteStore(Store store){
+        mStores.remove(store);
+    }
+    public List<Store> getStores() {
+        return mStores;
     }
 
 

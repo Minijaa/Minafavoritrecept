@@ -48,6 +48,11 @@
         <activity android:name=".ShoppingLiveModeActivity"
                   android:label="Handlaläge"
             android:parentActivityName=".ShoppingActivity"></activity>
+        <activity android:name=".StoreListActivity"
+            android:label="Mina affärer">
+        </activity>
+        <activity android:name=".StoreActivity"
+                  android:label="Min butik"></activity>
     </application>
 
 </manifest>

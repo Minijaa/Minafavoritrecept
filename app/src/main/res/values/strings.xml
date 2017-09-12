@@ -11,4 +11,7 @@
     <string name="recipe_description_label">Instruktioner</string>
     <string name="edit_recipe">Ändra recept</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/store_navigate_to_recipe_list"
+        android:icon="@drawable/ic_restaurant_white_24dp"
+        android:title="Recept"
+        app:showAsAction="ifRoom|withText"
+        ></item>
+    <item
+        android:id="@+id/store_navigate_to_shoppinglists"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+        android:title="Inköpslistor"
+        app:showAsAction="ifRoom|withText"
+        ></item>
+    <item
+        android:id="@+id/store_list_new_store"
+        android:icon="@drawable/ic_menu_add"
+        android:title="Ny Affär"
+        app:showAsAction="ifRoom|withText"/>
+</menu>
