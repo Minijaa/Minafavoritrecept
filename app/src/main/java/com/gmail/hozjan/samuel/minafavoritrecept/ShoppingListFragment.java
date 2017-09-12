@@ -32,6 +32,7 @@ public class ShoppingListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        RecipeStorage.get(getActivity()).loadData();
         
     }
 

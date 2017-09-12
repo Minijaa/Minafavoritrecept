@@ -41,10 +41,13 @@
             android:label="Mina Inköpslistor">
         </activity>
         <activity android:name=".ShoppingActivity"
-            android:label="Min inköpslista">
+            android:label="Min inköpslista"
+                  android:launchMode="singleTop"
+            android:parentActivityName=".ShoppingListActivity">
         </activity>
         <activity android:name=".ShoppingLiveModeActivity"
-                  android:label="Handlaläge"></activity>
+                  android:label="Handlaläge"
+            android:parentActivityName=".ShoppingActivity"></activity>
     </application>
 
 </manifest>

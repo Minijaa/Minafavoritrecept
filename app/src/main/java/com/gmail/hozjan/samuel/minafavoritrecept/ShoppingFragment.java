@@ -213,5 +213,10 @@ public class ShoppingFragment extends Fragment {
             return mIngredients.size();
         }
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        RecipeStorage.get(getActivity()).storeData();
+    }
 
 }

@@ -19,7 +19,8 @@ public class RecipeStorage {
     private List<ShoppingList> mShoppingLists;
 
     private Context mContext;
-    public static final String mDataFile = "recipe_data.dat";
+    public static final String mRecipeDataFile = "recipe_data.dat";
+    public static final String mShoppingListDataFile = "shoppinglist_data.dat";
 
     public static RecipeStorage get(Context context) {
         if (sRecipestorage == null) {
@@ -50,10 +51,21 @@ public class RecipeStorage {
     }
 
     public void storeData() {
+//        String mDataFile;
+//        ArrayList<?> mListToSave;
+//        if (dataFile == "shopping"){
+//            mDataFile = mShoppingListDataFile;
+//            mListToSave = new ArrayList<>(mShoppingLists);
+//        }else{
+//            mDataFile = mRecipeDataFile;
+//            mListToSave = new ArrayList<>(mRecipes);
+//        }
+
         try {
-            FileOutputStream outFile = mContext.getApplicationContext().openFileOutput(mDataFile, Context.MODE_PRIVATE);
+            FileOutputStream outFile = mContext.getApplicationContext().openFileOutput(mRecipeDataFile, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(outFile);
             oos.writeObject(mRecipes);
+            oos.writeObject(mShoppingLists);
             oos.close();
             outFile.close();
 
@@ -66,9 +78,10 @@ public class RecipeStorage {
 
     public void loadData() {
         try {
-            FileInputStream inFile = mContext.getApplicationContext().openFileInput(mDataFile);
+            FileInputStream inFile = mContext.getApplicationContext().openFileInput(mRecipeDataFile);
             ObjectInputStream ois = new ObjectInputStream(inFile);
             mRecipes = (ArrayList) ois.readObject();
+            mShoppingLists = (ArrayList) ois.readObject();
             ois.close();
             inFile.close();
 
@@ -100,6 +113,7 @@ public class RecipeStorage {
 
     public void deleteShoppingList(ShoppingList shoppingList){
         mShoppingLists.remove(shoppingList);
+        storeData();
     }
 
     public List<ShoppingList> getShoppingLists() {
@@ -114,5 +128,6 @@ public class RecipeStorage {
         }
         return null;
     }
+
 
 }

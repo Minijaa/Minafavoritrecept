@@ -1,6 +1,5 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
