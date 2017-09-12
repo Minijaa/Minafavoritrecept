@@ -162,6 +162,8 @@ public class ShoppingListFragment extends Fragment {
         } else if (item.getItemId() == R.id.navigate_to_recipe_list) {
             Intent intent = RecipeListActivity.newIntent(getActivity());
             startActivity(intent);
+        }else if (item.getItemId() == R.id.shopping_stores){
+
         }
         return super.onOptionsItemSelected(item);
 

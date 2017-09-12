@@ -2,8 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/shopping_enter_shopping_mode"
+        android:icon="@drawable/ic_shopping_basket_white_24dp"
+        android:title="Börja handla"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item
         android:id="@+id/shopping_new_ingredient"
         android:icon="@drawable/ic_menu_add"
         android:title="Ny ingrediens"
         app:showAsAction="ifRoom|withText"/>
+
+
 </menu>

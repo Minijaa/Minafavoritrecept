@@ -43,6 +43,8 @@
         <activity android:name=".ShoppingActivity"
             android:label="Min inköpslista">
         </activity>
+        <activity android:name=".ShoppingLiveModeActivity"
+                  android:label="Handlaläge"></activity>
     </application>
 
 </manifest>

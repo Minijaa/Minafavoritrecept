@@ -1,6 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -77,10 +78,6 @@ public class ShoppingFragment extends Fragment {
 
     private void updateUI() {
         List<Ingredient> ingredients = mShoppingList.getIngredients();
-//        Ingredient i = new Ingredient();
-//        i.setName("hej");
-//        i.setCategory("Ost");
-//        ingredients.add(i);
         mAdapter = new IngredientAdapter(ingredients);
         mShoppingIngredientsRecyclerView.setAdapter(mAdapter);
     }
@@ -107,8 +104,9 @@ public class ShoppingFragment extends Fragment {
         if (item.getItemId() == R.id.shopping_new_ingredient){
             mShoppingList.addIngredient(new Ingredient());
             mAdapter.notifyDataSetChanged();
-
-
+        }else if (item.getItemId() == R.id.shopping_enter_shopping_mode){
+            Intent intent = ShoppingLiveModeActivity.newIntent(getContext(), mShoppingList.getId());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,7 +120,6 @@ public class ShoppingFragment extends Fragment {
 
         public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_shoppinglist, parent, false));
-            mCheckBox = (CheckBox)itemView.findViewById(R.id.shopping_ingredient_checkbox);
             mNameEditText = (EditText)itemView.findViewById(R.id.shopping_ingredient_name_edittext);
             mCategorySpinner = (Spinner)itemView.findViewById(R.id.shopping_ingredient_categoryspinner);
             mDeleteButton = (ImageButton)itemView.findViewById(R.id.shopping_ingredient_delete_button);
