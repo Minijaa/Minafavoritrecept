@@ -47,7 +47,7 @@ public class ShoppingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_shopping, container, false);
-        mName = (EditText)v.findViewById(R.id.shopping_edit_name);
+        mName = (EditText)v.findViewById(R.id.store_edit_name);
         mName.setText(mShoppingList.getName());
         mName.addTextChangedListener(new TextWatcher() {
             @Override

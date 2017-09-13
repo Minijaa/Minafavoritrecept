@@ -123,6 +123,12 @@ public class RecipeStorage {
     public List<Store> getStores() {
         return mStores;
     }
-
-
+    public Store getStore(UUID id){
+        for (Store s : mStores) {
+            if (s.getId().equals(id)) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

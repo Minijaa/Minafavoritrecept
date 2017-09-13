@@ -54,12 +54,12 @@ public class StoreListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mStoreName = (TextView) itemView.findViewById(R.id.store_name_textview);
-            mDeleteButton = (ImageButton) itemView.findViewById(R.id.shoppinglist_shopping_delete_button);
+            mDeleteButton = (ImageButton) itemView.findViewById(R.id.store_delete_button);
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = ShoppingActivity.newIntent(getActivity(), mStore.getId());
+            Intent intent = StoreActivity.newIntent(getActivity(), mStore.getId());
             startActivity(intent);
         }
 

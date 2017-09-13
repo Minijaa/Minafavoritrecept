@@ -13,7 +13,7 @@
         android:layout_marginRight="16dp"
         />
     <EditText
-        android:id="@+id/shopping_edit_name"
+        android:id="@+id/store_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Fyll i inköpslistans namn"
