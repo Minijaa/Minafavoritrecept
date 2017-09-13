@@ -197,7 +197,7 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
+        //RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
         //recipeStorage.loadData();
         updateUI();
     }

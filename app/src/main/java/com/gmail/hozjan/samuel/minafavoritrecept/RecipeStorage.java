@@ -54,6 +54,7 @@ public class RecipeStorage {
             ObjectOutputStream oos = new ObjectOutputStream(outFile);
             oos.writeObject(mRecipes);
             oos.writeObject(mShoppingLists);
+            oos.writeObject(mStores);
             oos.close();
             outFile.close();
         } catch (FileNotFoundException e) {
@@ -69,6 +70,7 @@ public class RecipeStorage {
             ObjectInputStream ois = new ObjectInputStream(inFile);
             mRecipes = (ArrayList) ois.readObject();
             mShoppingLists = (ArrayList) ois.readObject();
+            mStores = (ArrayList)ois.readObject();
             ois.close();
             inFile.close();
         } catch (FileNotFoundException e) {
@@ -119,6 +121,7 @@ public class RecipeStorage {
     }
     public void deleteStore(Store store){
         mStores.remove(store);
+        storeData();
     }
     public List<Store> getStores() {
         return mStores;

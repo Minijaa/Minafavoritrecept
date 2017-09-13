@@ -1,14 +1,18 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
+import android.graphics.Color;
+import android.hardware.camera2.params.ColorSpaceTransform;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -18,12 +22,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_DRAG;
+import static android.support.v7.widget.helper.ItemTouchHelper.DOWN;
+import static android.support.v7.widget.helper.ItemTouchHelper.UP;
+
 
 public class StoreFragment extends Fragment {
     private EditText mName;
     private RecyclerView mCategoryRecyclerView;
     private Store mStore;
     private CategoryAdapter mAdapter;
+    private ItemTouchHelper mItemTouchHelper;
 
 
     @Override
@@ -32,6 +41,8 @@ public class StoreFragment extends Fragment {
         UUID storeId = (UUID) getActivity().getIntent().getSerializableExtra(StoreActivity.EXTRA_STORE_ID);
         mStore = RecipeStorage.get(getActivity()).getStore(storeId);
         setHasOptionsMenu(true);
+        mItemTouchHelper = new ItemTouchHelper(callbackItemTouchHelper);
+
     }
 
     @Nullable
@@ -59,11 +70,51 @@ public class StoreFragment extends Fragment {
 
         mCategoryRecyclerView = (RecyclerView) v.findViewById(R.id.store_category_recycler_view);
         mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        mItemTouchHelper.attachToRecyclerView(mCategoryRecyclerView);
         updateUI();
 
         return v;
     }
+
+    private ItemTouchHelper.Callback callbackItemTouchHelper = new ItemTouchHelper.Callback() {
+
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            int move = makeMovementFlags(UP | DOWN, 0);
+            return move;
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            //List<String> categories = mStore.getCategories();
+            int sourcePosition = viewHolder.getAdapterPosition();
+            int targetPosition = target.getAdapterPosition();
+            String movedCategory = mStore.getCategories().get(sourcePosition);
+            mStore.getCategories().remove(sourcePosition);
+            mStore.getCategories().add(targetPosition > sourcePosition ? targetPosition - 1 : targetPosition, movedCategory);
+            mAdapter.notifyItemMoved(sourcePosition, targetPosition);
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+
+        @Override
+        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+            super.onSelectedChanged(viewHolder, actionState);
+            if (actionState == ACTION_STATE_DRAG) {
+                viewHolder.itemView.setBackgroundColor(Color.parseColor("#26a69a"));
+            }
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+            viewHolder.itemView.setBackgroundColor(0);
+        }
+    };
 
     private void updateUI() {
         List<String> categories = mStore.getCategories();
@@ -73,14 +124,14 @@ public class StoreFragment extends Fragment {
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
-        private ImageButton mMoveButton;
+        //private ImageButton mMoveButton;
         private String mCategory;
 
 
         public CategoryHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_category, parent, false));
             mNameTextView = (TextView) itemView.findViewById(R.id.store_category_name_textview);
-            mMoveButton = (ImageButton)itemView.findViewById(R.id.store_move_button);
+            //mMoveButton = (ImageButton) itemView.findViewById(R.id.store_move_button);
         }
 
         public void bind(final String category) {
@@ -119,7 +170,7 @@ public class StoreFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        //RecipeStorage.get(getActivity()).storeData();
+        RecipeStorage.get(getActivity()).storeData();
     }
 
 }
