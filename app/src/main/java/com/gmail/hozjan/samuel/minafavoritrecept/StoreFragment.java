@@ -15,6 +15,7 @@ import java.util.UUID;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -72,12 +73,14 @@ public class StoreFragment extends Fragment {
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
+        private ImageButton mMoveButton;
         private String mCategory;
 
 
         public CategoryHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_category, parent, false));
             mNameTextView = (TextView) itemView.findViewById(R.id.store_category_name_textview);
+            mMoveButton = (ImageButton)itemView.findViewById(R.id.store_move_button);
         }
 
         public void bind(final String category) {

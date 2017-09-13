@@ -54,7 +54,7 @@ public class StoreListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mStoreName = (TextView) itemView.findViewById(R.id.store_name_textview);
-            mDeleteButton = (ImageButton) itemView.findViewById(R.id.store_delete_button);
+            mDeleteButton = (ImageButton) itemView.findViewById(R.id.store_move_button);
         }
 
         @Override
