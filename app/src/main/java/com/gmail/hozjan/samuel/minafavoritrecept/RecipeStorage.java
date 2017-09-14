@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class RecipeStorage {
@@ -27,6 +29,7 @@ public class RecipeStorage {
         }
         return sRecipestorage;
     }
+
     private RecipeStorage(Context context) {
         mRecipes = new ArrayList<>();
         mShoppingLists = new ArrayList<>();
@@ -38,7 +41,6 @@ public class RecipeStorage {
         return mRecipes;
     }
 
-    //Borde göra om till en TreeMap som sorterar på recept-namnet.
     public Recipe getRecipe(UUID id) {
         for (Recipe recipe : mRecipes) {
             if (recipe.getId().equals(id)) {
@@ -46,6 +48,31 @@ public class RecipeStorage {
             }
         }
         return null;
+    }
+
+    public List<Ingredient> getSortedShoppingList(String storeName, List<Ingredient> shoppingList) {
+        List<Ingredient> sortedIngredientList = new ArrayList<>();
+        List<Ingredient> unSortedIngredientList = shoppingList;
+        List<String> chosenStoreCategories = new ArrayList<>();
+        //Map<String, List<Ingredient>> ingredientsByCategory = new HashMap<>();
+
+        if (!storeName.equals("Standard")){
+            for (Store s : mStores) {
+                if (s.getName().equals(storeName)) {
+                    chosenStoreCategories = s.getCategories();
+                }
+            }
+        }else {
+            chosenStoreCategories = new Store().getCategories();
+        }
+        for (String kategori : chosenStoreCategories){
+            for (Ingredient ingredient : unSortedIngredientList){
+                if (ingredient.getCategory().equals(kategori)){
+                    sortedIngredientList.add(ingredient);
+                }
+            }
+        }
+        return sortedIngredientList;
     }
 
     public void storeData() {
@@ -70,7 +97,7 @@ public class RecipeStorage {
             ObjectInputStream ois = new ObjectInputStream(inFile);
             mRecipes = (ArrayList) ois.readObject();
             mShoppingLists = (ArrayList) ois.readObject();
-            mStores = (ArrayList)ois.readObject();
+            mStores = (ArrayList) ois.readObject();
             ois.close();
             inFile.close();
         } catch (FileNotFoundException e) {
@@ -95,11 +122,12 @@ public class RecipeStorage {
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, recipe.getImageFilename());
     }
-    public void addShoppingList(ShoppingList shoppingList){
+
+    public void addShoppingList(ShoppingList shoppingList) {
         mShoppingLists.add(shoppingList);
     }
 
-    public void deleteShoppingList(ShoppingList shoppingList){
+    public void deleteShoppingList(ShoppingList shoppingList) {
         mShoppingLists.remove(shoppingList);
         storeData();
     }
@@ -116,17 +144,21 @@ public class RecipeStorage {
         }
         return null;
     }
-    public void addStore(Store store){
+
+    public void addStore(Store store) {
         mStores.add(store);
     }
-    public void deleteStore(Store store){
+
+    public void deleteStore(Store store) {
         mStores.remove(store);
         storeData();
     }
+
     public List<Store> getStores() {
         return mStores;
     }
-    public Store getStore(UUID id){
+
+    public Store getStore(UUID id) {
         for (Store s : mStores) {
             if (s.getId().equals(id)) {
                 return s;

@@ -51,6 +51,9 @@ public class ShoppingList implements Serializable {
         mIngredients.remove(ingredient);
     }
 
+    public void setIngredients(List<Ingredient> ingredients) {
+        mIngredients = ingredients;
+    }
     public Date getDate() {
         return mDate;
     }
@@ -70,4 +73,5 @@ public class ShoppingList implements Serializable {
         }
         return "(0)";
     }
+
 }

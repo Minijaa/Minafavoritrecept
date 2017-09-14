@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,13 +87,26 @@ public class StoreFragment extends Fragment {
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            //List<String> categories = mStore.getCategories();
-            int sourcePosition = viewHolder.getAdapterPosition();
-            int targetPosition = target.getAdapterPosition();
-            String movedCategory = mStore.getCategories().get(sourcePosition);
-            mStore.getCategories().remove(sourcePosition);
-            mStore.getCategories().add(targetPosition > sourcePosition ? targetPosition - 1 : targetPosition, movedCategory);
+            List<String> categories = mStore.getCategories();
+            final int sourcePosition = viewHolder.getAdapterPosition();
+            final int targetPosition = target.getAdapterPosition();
+            //String movedCategory = mStore.getCategories().get(sourcePosition);
+            //categories.remove(sourcePosition);
+            if (sourcePosition < targetPosition) {
+                for (int i = sourcePosition; i < targetPosition; i++) {
+                    Collections.swap(categories, i, i + 1);
+                }
+            } else {
+                for (int i = sourcePosition; i> targetPosition; i--){
+                    Collections.swap(categories, i, i-1);
+                }
+            }
+
+            //String movedCategory = categories.remove(sourcePosition);
+            //categories.add(targetPosition > sourcePosition ? targetPosition - 1 : targetPosition, movedCategory);
+
             mAdapter.notifyItemMoved(sourcePosition, targetPosition);
+
             return true;
         }
 

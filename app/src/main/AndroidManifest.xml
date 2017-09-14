@@ -40,19 +40,25 @@
             android:name=".ShoppingListActivity"
             android:label="Mina Inköpslistor">
         </activity>
-        <activity android:name=".ShoppingActivity"
+        <activity
+            android:name=".ShoppingActivity"
             android:label="Min inköpslista"
-                  android:launchMode="singleTop"
+            android:launchMode="singleTop"
             android:parentActivityName=".ShoppingListActivity">
         </activity>
-        <activity android:name=".ShoppingLiveModeActivity"
-                  android:label="Handlaläge"
+        <activity
+            android:name=".ShoppingLiveModeActivity"
+            android:label="Handlaläge"
             android:parentActivityName=".ShoppingActivity"></activity>
-        <activity android:name=".StoreListActivity"
+        <activity
+            android:name=".StoreListActivity"
             android:label="Mina affärer">
         </activity>
-        <activity android:name=".StoreActivity"
-                  android:label="Min butik"></activity>
+        <activity
+            android:name=".StoreActivity"
+            android:label="Min butik"
+            android:launchMode="singleTop"
+            android:parentActivityName=".StoreListActivity"></activity>
     </application>
 
 </manifest>
