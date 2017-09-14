@@ -1,6 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,9 @@ public class ShoppingLiveModeFragment extends Fragment {
     private Spinner mStoreSpinner;
     private List<String> mStoreNames;
     private Store standardStore;
+    private int mNameFlag;
+    private int mCategoryFlag;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +50,12 @@ public class ShoppingLiveModeFragment extends Fragment {
             mStoreNames.add(s.getName());
         }
         standardStore = new Store();
-        standardStore.setName("Standard");
+        standardStore.setName("-Butik-");
         if (!mStoreNames.contains(standardStore.getName())) {
             mStoreNames.add(0, standardStore.getName());
         }
         setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -91,9 +96,7 @@ public class ShoppingLiveModeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String storeName = "";
-
                 storeName = (String) parent.getItemAtPosition(position);
-
                 List<Ingredient> sortedShoppingList = RecipeStorage.get(getActivity()).getSortedShoppingList(storeName, mShoppingList.getIngredients());
                 mShoppingList.setIngredients(sortedShoppingList);
 
@@ -137,7 +140,8 @@ public class ShoppingLiveModeFragment extends Fragment {
             mCheckBox = (CheckBox) itemView.findViewById(R.id.shopping_live_mode_ingredient_checkbox);
             mName = (TextView) itemView.findViewById(R.id.shopping_live_mode_ingredient_name_textview);
             mCategory = (TextView) itemView.findViewById(R.id.shopping_live_mode_ingredient_category_textview);
-
+            mNameFlag = mName.getPaintFlags();
+            mCategoryFlag = mCategory.getPaintFlags();
         }
 
         public void bind(final Ingredient ingredient) {
@@ -146,6 +150,15 @@ public class ShoppingLiveModeFragment extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ingredient.setMarked(isChecked);
+
+                    if (isChecked){
+
+                        mName.setPaintFlags(mName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        mCategory.setPaintFlags(mCategory.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }else{
+                        mName.setPaintFlags(mNameFlag);
+                        mCategory.setPaintFlags(mCategoryFlag);
+                    }
                 }
             });
             mIngredient = ingredient;

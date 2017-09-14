@@ -48,7 +48,7 @@
         </activity>
         <activity
             android:name=".ShoppingLiveModeActivity"
-            android:label="Handlaläge"
+            android:label="Handla"
             android:parentActivityName=".ShoppingActivity"></activity>
         <activity
             android:name=".StoreListActivity"

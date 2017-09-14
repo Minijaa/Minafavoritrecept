@@ -56,7 +56,7 @@ public class RecipeStorage {
         List<String> chosenStoreCategories = new ArrayList<>();
         //Map<String, List<Ingredient>> ingredientsByCategory = new HashMap<>();
 
-        if (!storeName.equals("Standard")){
+        if (!storeName.equals("-Butik-")){
             for (Store s : mStores) {
                 if (s.getName().equals(storeName)) {
                     chosenStoreCategories = s.getCategories();
