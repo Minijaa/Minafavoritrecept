@@ -28,7 +28,6 @@ import java.util.UUID;
 
 
 public class ShoppingFragment extends Fragment {
-    private EditText mName;
     private RecyclerView mShoppingIngredientsRecyclerView;
     private ShoppingList mShoppingList;
     private IngredientAdapter mAdapter;
@@ -37,7 +36,7 @@ public class ShoppingFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID shoppingListId = (UUID)getActivity().getIntent().getSerializableExtra(ShoppingActivity.EXTRA_SHOPPINGLIST_ID);
+        UUID shoppingListId = (UUID) getActivity().getIntent().getSerializableExtra(ShoppingActivity.EXTRA_SHOPPINGLIST_ID);
         mShoppingList = RecipeStorage.get(getActivity()).getShoppingList(shoppingListId);
         setHasOptionsMenu(true);
     }
@@ -47,9 +46,9 @@ public class ShoppingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_shopping, container, false);
-        mName = (EditText)v.findViewById(R.id.store_edit_name);
-        mName.setText(mShoppingList.getName());
-        mName.addTextChangedListener(new TextWatcher() {
+        EditText name = (EditText) v.findViewById(R.id.store_edit_name);
+        name.setText(mShoppingList.getName());
+        name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -66,14 +65,13 @@ public class ShoppingFragment extends Fragment {
             }
         });
 
-        mShoppingIngredientsRecyclerView = (RecyclerView)v.findViewById(R.id.shopping_ingredients_recycler_view);
+        mShoppingIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.shopping_ingredients_recycler_view);
         mShoppingIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
 
         return v;
     }
-
 
 
     private void updateUI() {
@@ -101,41 +99,42 @@ public class ShoppingFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.shopping_new_ingredient){
+        if (item.getItemId() == R.id.shopping_new_ingredient) {
             mShoppingList.addIngredient(new Ingredient());
             mAdapter.notifyDataSetChanged();
-        }else if (item.getItemId() == R.id.shopping_enter_shopping_mode){
+        } else if (item.getItemId() == R.id.shopping_enter_shopping_mode) {
             Intent intent = ShoppingLiveModeActivity.newIntent(getContext(), mShoppingList.getId());
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
-    private class IngredientHolder extends RecyclerView.ViewHolder{
-        private CheckBox mCheckBox;
+
+    private class IngredientHolder extends RecyclerView.ViewHolder {
         private EditText mNameEditText;
         private Spinner mCategorySpinner;
         private ImageButton mDeleteButton;
         private Ingredient mIngredient;
 
 
-        public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
+        IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_shoppinglist, parent, false));
-            mNameEditText = (EditText)itemView.findViewById(R.id.shopping_ingredient_name_edittext);
-            mCategorySpinner = (Spinner)itemView.findViewById(R.id.shopping_ingredient_categoryspinner);
-            mDeleteButton = (ImageButton)itemView.findViewById(R.id.shopping_ingredient_delete_button);
+            mNameEditText = (EditText) itemView.findViewById(R.id.shopping_ingredient_name_edittext);
+            mCategorySpinner = (Spinner) itemView.findViewById(R.id.shopping_ingredient_categoryspinner);
+            mDeleteButton = (ImageButton) itemView.findViewById(R.id.shopping_ingredient_delete_button);
         }
-        public void bind(final Ingredient ingredient){
+
+        void bind(final Ingredient ingredient) {
             mIngredient = ingredient;
             mNameEditText.setText(mIngredient.getName());
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             mCategorySpinner.setAdapter(adapter);
             mCategorySpinner.setSelection(getSpinnerIndex(mCategorySpinner, mIngredient.getCategory()));
-            mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    mIngredient.setCategory((String)parent.getItemAtPosition(position));
+                    mIngredient.setCategory((String) parent.getItemAtPosition(position));
                 }
 
                 @Override
@@ -189,10 +188,11 @@ public class ShoppingFragment extends Fragment {
             });
         }
     }
+
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
 
-        public IngredientAdapter(List<Ingredient> ingredients) {
+        IngredientAdapter(List<Ingredient> ingredients) {
             mIngredients = ingredients;
         }
 
@@ -213,9 +213,18 @@ public class ShoppingFragment extends Fragment {
             return mIngredients.size();
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();
+        if (mShoppingList.getName() == null || mShoppingList.getName().equals("")) {
+            mShoppingList.setName("Inköpslista #" + RecipeStorage.get(getActivity()).getNoNameNr("shoppinglist"));
+        }
+        for (Ingredient i : mShoppingList.getIngredients()){
+            if (i.getName() == null || i.getName().equals("")){
+                i.setName("Namnlös ingredient");
+            }
+        }
         RecipeStorage.get(getActivity()).storeData();
     }
 

@@ -1,7 +1,6 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.graphics.Color;
-import android.hardware.camera2.params.ColorSpaceTransform;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,24 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
 import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_DRAG;
 import static android.support.v7.widget.helper.ItemTouchHelper.DOWN;
 import static android.support.v7.widget.helper.ItemTouchHelper.UP;
 
 
 public class StoreFragment extends Fragment {
-    private EditText mName;
     private RecyclerView mCategoryRecyclerView;
     private Store mStore;
     private CategoryAdapter mAdapter;
@@ -50,9 +44,9 @@ public class StoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_store, container, false);
-        mName = (EditText) v.findViewById(R.id.store_edit_name);
-        mName.setText(mStore.getName());
-        mName.addTextChangedListener(new TextWatcher() {
+        EditText name = (EditText) v.findViewById(R.id.store_edit_name);
+        name.setText(mStore.getName());
+        name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -81,8 +75,7 @@ public class StoreFragment extends Fragment {
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            int move = makeMovementFlags(UP | DOWN, 0);
-            return move;
+            return makeMovementFlags(UP | DOWN, 0);
         }
 
         @Override
@@ -138,18 +131,13 @@ public class StoreFragment extends Fragment {
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
-        //private ImageButton mMoveButton;
-        private String mCategory;
 
-
-        public CategoryHolder(LayoutInflater inflater, ViewGroup parent) {
+        CategoryHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_category, parent, false));
             mNameTextView = (TextView) itemView.findViewById(R.id.store_category_name_textview);
-            //mMoveButton = (ImageButton) itemView.findViewById(R.id.store_move_button);
         }
 
-        public void bind(final String category) {
-            mCategory = category;
+        void bind(final String category) {
             mNameTextView.setText(category);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -159,7 +147,7 @@ public class StoreFragment extends Fragment {
     private class CategoryAdapter extends RecyclerView.Adapter<CategoryHolder> {
         private List<String> mCategories;
 
-        public CategoryAdapter(List<String> categories) {
+        CategoryAdapter(List<String> categories) {
             mCategories = categories;
         }
 
@@ -184,6 +172,9 @@ public class StoreFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (mStore.getName() == null || mStore.getName().equals("")){
+            mStore.setName("Butik #" + RecipeStorage.get(getActivity()).getNoNameNr("store"));
+        }
         RecipeStorage.get(getActivity()).storeData();
     }
 

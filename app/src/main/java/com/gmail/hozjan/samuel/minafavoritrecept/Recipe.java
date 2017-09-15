@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Recipe implements Serializable{
+class Recipe implements Serializable{
 
     private UUID mId;
     private String mName;
@@ -13,7 +13,7 @@ public class Recipe implements Serializable{
     private String mCategory;
     private ArrayList<Ingredient> mIngredients;
 
-    public Recipe() {
+    Recipe() {
         mId = UUID.randomUUID();
         mIngredients = new ArrayList<>();
     }
@@ -30,39 +30,39 @@ public class Recipe implements Serializable{
         return mName;
     }
 
-    public void setmName(String mName) {
+    void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return mDescription;
     }
 
-    public void setDescription(String mDescription) {
+    void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public String getCategory() {
+    String getCategory() {
         return mCategory;
     }
 
-    public void setCategory(String mCategory) {
+    void setCategory(String mCategory) {
         this.mCategory = mCategory;
     }
 
-    public String getImageFilename() {
+    String getImageFilename() {
         return "IMG_" + getId().toString() + ".jpg";
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
 
-    public List<Ingredient> getIngredients() {
+    List<Ingredient> getIngredients() {
         return mIngredients;
     }
 
-    public String getIngredientsAsString() {
+    String getIngredientsAsString() {
         String ingredients = "";
         for (Ingredient i : mIngredients) {
             if (i.getName() != null) {
@@ -77,7 +77,7 @@ public class Recipe implements Serializable{
         return ingredients;
     }
 
-    public void removeIngredient(Ingredient ingredient) {
+    void removeIngredient(Ingredient ingredient) {
         mIngredients.remove(ingredient);
     }
 }

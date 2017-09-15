@@ -1,9 +1,7 @@
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,9 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 
@@ -55,7 +50,7 @@ public class ShoppingListFragment extends Fragment {
         private TextView mDateTextView;
         private ImageButton mDeleteButton;
 
-        public ShoppingListHolder(LayoutInflater inflater, ViewGroup parent) {
+        ShoppingListHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_list_of_shoppinglists, parent, false));
             itemView.setOnClickListener(this);
 
@@ -112,7 +107,7 @@ public class ShoppingListFragment extends Fragment {
     private class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListHolder> {
         private List<ShoppingList> mShoppingLists;
 
-        public ShoppingListAdapter(List<ShoppingList> shoppingLists){
+        ShoppingListAdapter(List<ShoppingList> shoppingLists){
             mShoppingLists = shoppingLists;
         }
 
@@ -173,8 +168,6 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
-        //recipeStorage.loadData();
         updateUI();
     }
 

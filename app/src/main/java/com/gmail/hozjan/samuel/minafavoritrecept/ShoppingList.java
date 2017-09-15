@@ -8,13 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class ShoppingList implements Serializable {
+class ShoppingList implements Serializable {
     private UUID mId;
     private String name;
     private Date mDate;
     private List<Ingredient> mIngredients;
 
-    public ShoppingList() {
+    ShoppingList() {
         mIngredients = new ArrayList<>();
         mId = UUID.randomUUID();
         mDate = new Date();
@@ -36,38 +36,28 @@ public class ShoppingList implements Serializable {
         this.name = name;
     }
 
-    public List<Ingredient> getIngredients() {
+    List<Ingredient> getIngredients() {
         return mIngredients;
     }
 
-    //public Ingredient getIngredient(UUID id){
-
-    //}
-    public void addIngredient(Ingredient ingredient) {
+    void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
 
-    public void removeIngredient(Ingredient ingredient) {
+    void removeIngredient(Ingredient ingredient) {
         mIngredients.remove(ingredient);
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    void setIngredients(List<Ingredient> ingredients) {
         mIngredients = ingredients;
     }
-    public Date getDate() {
-        return mDate;
-    }
 
-    public void setDate(Date date) {
-        mDate = date;
-    }
-
-    public String getDateAsString() {
+    String getDateAsString() {
         return DateFormat.getDateInstance(DateFormat.MEDIUM).format(mDate);
 
     }
 
-    public String getQuantity() {
+    String getQuantity() {
         if (mIngredients != null) {
             return "(" + mIngredients.size() +")";
         }

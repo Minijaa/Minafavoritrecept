@@ -28,8 +28,6 @@ public class StoreListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //RecipeStorage.get(getActivity()).loadData();
-
     }
 
     @Nullable
@@ -49,7 +47,7 @@ public class StoreListFragment extends Fragment {
         private TextView mStoreName;
         private ImageButton mDeleteButton;
 
-        public StoreListHolder(LayoutInflater inflater, ViewGroup parent) {
+        StoreListHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_store, parent, false));
             itemView.setOnClickListener(this);
 
@@ -99,7 +97,7 @@ public class StoreListFragment extends Fragment {
     private class StoreListAdapter extends RecyclerView.Adapter<StoreListHolder> {
         private List<Store> mStores;
 
-        public StoreListAdapter(List<Store> stores) {
+        StoreListAdapter(List<Store> stores) {
             mStores = stores;
         }
 
@@ -161,9 +159,6 @@ public class StoreListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
-        //recipeStorage.loadData();
         updateUI();
     }
-
 }

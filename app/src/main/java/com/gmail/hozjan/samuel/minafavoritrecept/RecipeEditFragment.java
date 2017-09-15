@@ -41,15 +41,10 @@ import static android.app.Activity.RESULT_OK;
 public class RecipeEditFragment extends Fragment {
     private static final int REQUEST_PHOTO = 1;
     private Recipe mRecipe;
-    private EditText mRecipeName;
     private RecyclerView mIngredientsRecyclerView;
-    private EditText mInsctructions;
     private File mRecipeImageFile;
     private IngredientAdapter mAdapter;
-    private ImageButton mPhotoButton;
     private ImageView mRecipeImageView;
-    private ImageButton mAddIngredientButton;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,18 +56,15 @@ public class RecipeEditFragment extends Fragment {
 
     }
 
-//    public RecipeEditFragment() {}
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_recipe_edit, container, false);
-        mRecipeName = (EditText) v.findViewById(R.id.edit_recipe_name);
-        mRecipeName.setText(mRecipe.getName());
-        mRecipeName.addTextChangedListener(new TextWatcher() {
+        EditText recipeName = (EditText) v.findViewById(R.id.edit_recipe_name);
+        recipeName.setText(mRecipe.getName());
+        recipeName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -80,7 +72,7 @@ public class RecipeEditFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mRecipe.setmName(s.toString());
+                mRecipe.setName(s.toString());
             }
 
             @Override
@@ -91,11 +83,11 @@ public class RecipeEditFragment extends Fragment {
         PackageManager packageManager = getActivity().getPackageManager();
         mRecipeImageView = (ImageView) v.findViewById(R.id.edit_recipe_image);
         updateImageView();
-        mPhotoButton = (ImageButton) v.findViewById(R.id.edit_photo_button);
+        ImageButton photoButton = (ImageButton) v.findViewById(R.id.edit_photo_button);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mRecipeImageFile != null && captureImage.resolveActivity(packageManager) != null;
-        mPhotoButton.setEnabled(canTakePhoto);
-        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+        photoButton.setEnabled(canTakePhoto);
+        photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri = FileProvider.getUriForFile(getActivity(), "com.gmail.hozjan.samuel.minafavoritrecept.fileprovider", mRecipeImageFile);
@@ -109,8 +101,8 @@ public class RecipeEditFragment extends Fragment {
             }
         });
 
-        mAddIngredientButton = (ImageButton) v.findViewById(R.id.edit_add_ingredient_button);
-        mAddIngredientButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton addIngredientButton = (ImageButton) v.findViewById(R.id.edit_add_ingredient_button);
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRecipe.addIngredient(new Ingredient());
@@ -120,9 +112,9 @@ public class RecipeEditFragment extends Fragment {
         mIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.ingredients_recycler_view);
         mIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mInsctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
-        mInsctructions.setText(mRecipe.getDescription());
-        mInsctructions.addTextChangedListener(new TextWatcher() {
+        EditText insctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
+        insctructions.setText(mRecipe.getDescription());
+        insctructions.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -144,15 +136,15 @@ public class RecipeEditFragment extends Fragment {
         categorySpinner.setAdapter(adapter);
         categorySpinner.setSelection(getSpinnerIndex(categorySpinner, mRecipe.getCategory()));
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mRecipe.setCategory((String) parent.getItemAtPosition(position));
-            }
+                                                      @Override
+                                                      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                          mRecipe.setCategory((String) parent.getItemAtPosition(position));
+                                                      }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        }
+                                                      @Override
+                                                      public void onNothingSelected(AdapterView<?> parent) {
+                                                      }
+                                                  }
         );
         updateUI();
         return v;
@@ -226,25 +218,25 @@ public class RecipeEditFragment extends Fragment {
         private ImageButton mIngredientDeleteButton;
         private Ingredient mIngredient;
 
-        public IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
+        IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_ingredient, parent, false));
             mIngredientNameEditText = (EditText) itemView.findViewById(R.id.shopping_ingredient_name_edittext);
             mIngredientCategorySpinner = (Spinner) itemView.findViewById(R.id.ingredient_categoryspinner);
             mIngredientDeleteButton = (ImageButton) itemView.findViewById(R.id.shopping_ingredient_delete_button);
         }
 
-        public void bind(final Ingredient ingredient) {
+        void bind(final Ingredient ingredient) {
             mIngredient = ingredient;
             mIngredientNameEditText.setText(mIngredient.getName());
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
             mIngredientCategorySpinner.setAdapter(adapter);
             mIngredientCategorySpinner.setSelection(getSpinnerIndex(mIngredientCategorySpinner, mIngredient.getCategory()));
-            mIngredientCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            mIngredientCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mIngredient.setCategory((String)parent.getItemAtPosition(position));
+                    mIngredient.setCategory((String) parent.getItemAtPosition(position));
                 }
 
                 @Override
@@ -265,7 +257,8 @@ public class RecipeEditFragment extends Fragment {
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {}
+                public void afterTextChanged(Editable s) {
+                }
             });
 
             mIngredientDeleteButton.setOnClickListener(new View.OnClickListener() {
@@ -304,7 +297,7 @@ public class RecipeEditFragment extends Fragment {
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
 
-        public IngredientAdapter(List<Ingredient> ingredients) {
+        IngredientAdapter(List<Ingredient> ingredients) {
             mIngredients = ingredients;
         }
 
@@ -346,6 +339,14 @@ public class RecipeEditFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (mRecipe.getName() == null || mRecipe.getName().equals("")) {
+            mRecipe.setName("Recept #"+ RecipeStorage.get(getActivity()).getNoNameNr("recipe"));
+        }
+        for (Ingredient i : mRecipe.getIngredients()){
+            if (i.getName() == null || i.getName().equals("")){
+                i.setName("Namnlös ingredient");
+            }
+        }
         RecipeStorage.get(getActivity()).storeData();
     }
 }

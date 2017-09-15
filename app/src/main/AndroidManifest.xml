@@ -52,7 +52,7 @@
             android:parentActivityName=".ShoppingActivity"></activity>
         <activity
             android:name=".StoreListActivity"
-            android:label="Mina affärer">
+            android:label="Mina butiker">
         </activity>
         <activity
             android:name=".StoreActivity"

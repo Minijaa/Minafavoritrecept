@@ -6,8 +6,7 @@ import android.support.v4.app.Fragment;
 
 public class StoreListActivity extends SingleFragmentActivity {
     public static Intent newIntent(Context packageContext){
-        Intent intent = new Intent(packageContext, StoreListActivity.class);
-        return intent;
+        return new Intent(packageContext, StoreListActivity.class);
     }
 
     @Override

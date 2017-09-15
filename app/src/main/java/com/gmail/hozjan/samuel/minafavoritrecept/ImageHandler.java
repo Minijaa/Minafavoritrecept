@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
-public class ImageHandler {
-    public static Bitmap getScaleBitMap(String path, int destWidth, int destHeight){
+class ImageHandler {
+    private static Bitmap getScaleBitMap(String path, int destWidth, int destHeight){
         //Read in the dimensions of the image on disk
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -30,7 +30,7 @@ public class ImageHandler {
         return BitmapFactory.decodeFile(path, options);
     }
 
-    public static Bitmap getScaledBitmap(String path, Activity activity){
+    static Bitmap getScaledBitmap(String path, Activity activity){
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
         return getScaleBitMap(path, size.x, size.y);

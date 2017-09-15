@@ -56,7 +56,7 @@ public class RecipeListFragment extends Fragment {
         private File mRecipeImageFile;
         private ImageButton mDeleteButton;
 
-        public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
+        RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_recipe, parent, false));
             itemView.setOnClickListener(this);
 
@@ -80,8 +80,6 @@ public class RecipeListFragment extends Fragment {
             mRecipeImageFile = RecipeStorage.get(getActivity()).getImageFile(recipe);
             updateImageView();
 
-            // kanske kan använda den vanliga onclick-listenern istället och bara köra en if-sats om man klickar på papperskorg-knappen.
-            //Else starta ny recipefragment.
             mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,15 +112,11 @@ public class RecipeListFragment extends Fragment {
 
         private void updateImageView() {
             if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
-                //mThumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_image));
-                //mThumbnailImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
                 Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
                 Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 170, 120, true));
                 mThumbnailImageView.setImageDrawable(d);
             } else {
-                //Bitmap bitmap = ImageHandler.getScaleBitMap(mRecipeImageFile.getPath(),135,180);
-
                 //Läs in bilden som nu bör finnas där vi sa att den skulle placeras
                 Bitmap bm = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
 
@@ -138,7 +132,7 @@ public class RecipeListFragment extends Fragment {
     private class RecipeAdapter extends RecyclerView.Adapter<RecipeHolder> {
         private List<Recipe> mRecipes;
 
-        public RecipeAdapter(List<Recipe> recipes) {
+        RecipeAdapter(List<Recipe> recipes) {
             mRecipes = recipes;
         }
 
@@ -182,7 +176,6 @@ public class RecipeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_recipe) {
             Recipe recipe = new Recipe();
-            //recipe.setmName("testnamnet");
             RecipeStorage.get(getActivity()).addRecipe(recipe);
             Intent intent = RecipeEditActivity.newIntent(getActivity(), recipe.getId());
             startActivity(intent);
@@ -197,8 +190,6 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //RecipeStorage recipeStorage = RecipeStorage.get(getActivity());
-        //recipeStorage.loadData();
         updateUI();
     }
 }
