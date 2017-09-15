@@ -2,9 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/appbar_add_to_shoppinglist"
+        android:icon="@drawable/ic_add_shopping_cart_white_24dp"
+        android:title="@string/edit_recipe"
+        app:showAsAction="ifRoom|withText">
+    </item>
+
+    <item
         android:id="@+id/appbar_edit_recipe_button"
         android:icon="@drawable/edit_recipe"
         android:title="@string/edit_recipe"
         app:showAsAction="ifRoom|withText">
     </item>
+
 </menu>

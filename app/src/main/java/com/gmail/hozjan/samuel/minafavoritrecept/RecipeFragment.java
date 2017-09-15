@@ -68,6 +68,14 @@ public class RecipeFragment extends Fragment {
             Intent intent = RecipeEditActivity.newIntent(getActivity(), mRecipe.getId());
             startActivity(intent);
             return true;
+        }else if (item.getItemId() == R.id.appbar_add_to_shoppinglist){
+            ShoppingList shoppingList = new ShoppingList();
+            shoppingList.setIngredients(mRecipe.getIngredients());
+            shoppingList.setName(mRecipe.getName());
+            RecipeStorage.get(getActivity()).addShoppingList(shoppingList);
+            Intent intent = ShoppingActivity.newIntent(getActivity(), shoppingList.getId());
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
