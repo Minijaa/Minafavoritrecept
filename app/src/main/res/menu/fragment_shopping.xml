@@ -4,13 +4,13 @@
     <item
         android:id="@+id/shopping_enter_shopping_mode"
         android:icon="@drawable/ic_shopping_basket_white_24dp"
-        android:title="Börja handla"
+        android:title="@string/menubutton_enter_shopping_mode"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/shopping_new_ingredient"
         android:icon="@drawable/ic_menu_add"
-        android:title="Ny ingrediens"
+        android:title="@string/menubutton_new_ingredient"
         app:showAsAction="ifRoom|withText"/>
 
 

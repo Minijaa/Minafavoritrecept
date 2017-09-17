@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,8 +25,8 @@
 
     <TextView
         android:id="@+id/recipe_list_item_name"
-        android:text="Receptnamnet"
-        android:textSize="18dp"
+        android:text="@string/itemview_recipe_namesample"
+        android:textSize="18sp"
         android:textColor="@android:color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -40,7 +39,7 @@
 
     <TextView
         android:id="@+id/recipe_list_item_category"
-        android:text="Kategorinamnet"
+        android:text="@string/itemview_recipe_categorynamesample"
         android:textSize="12sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

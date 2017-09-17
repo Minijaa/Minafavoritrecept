@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Namn"
+        android:text="@string/recipe_name_label"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -15,7 +15,7 @@
         android:id="@+id/store_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fyll i affärens namn"
+        android:hint="@string/store_name_hint"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="16dp"
@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Håll in för att ändra ordning"
+        android:text="@string/store_category_instruction_label"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"

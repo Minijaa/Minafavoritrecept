@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recipe_scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/recipe_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <ImageView
             android:id="@+id/recipe_image"
-            android:adjustViewBounds="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/recipe_image_description"
             android:cropToPadding="false"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/default_image"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            app:srcCompat="@drawable/default_image_red_jpg"/>
 
         <TextView
             android:id="@+id/recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#FFFF"
             android:background="@color/colorPrimary"
             android:padding="8dp"
             android:textAlignment="center"
+            android:textColor="#FFFF"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,24 +43,24 @@
             android:id="@+id/recipe_category"
             android:layout_width="0dp"
             android:layout_height="27dp"
-            android:textAlignment="center"
             android:background="@color/colorPrimary"
-            android:textColor="#FFFF"
             android:paddingBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_name"
+            android:textAlignment="center"
+            android:textColor="#FFFF"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_name"/>
 
         <TextView
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:text="Ingredienser"
-            android:paddingTop="12dp"
-            android:paddingLeft="16dp"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:background="@color/colorAccent"
-            android:id="@+id/linearLayout"
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp"
+            android:text="@string/recipe_ingredient_label"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_category"/>
@@ -70,45 +70,40 @@
             android:id="@+id/recipe_ingrediences"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingBottom="4dp"
-            android:text="3dl ris \n1kg kyckling \n1st salladsblad"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
 
 
         <TextView
+            android:id="@+id/recipe_instructions_title"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:text="Instruktioner"
-            android:paddingTop="12dp"
-            android:paddingLeft="16dp"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorAccent"
-            android:id="@+id/recipe_instructions_title"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_ingrediences"
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp"
+            android:text="@string/recipe_description_label"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="8dp"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/recipe_ingrediences"/>
 
         <TextView
             android:id="@+id/recipe_instructions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="#f5f5f5"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Först börjar du att steka kyclingen i 8min. Sedan blandar du samman allting. bla bla bla bla bla bla bla bla baskölsjdf lsakjf hsdalkfj hsdlfkjsahd flsadkjhf sdlkjf hsadlkfj hsdaalf kjsdhf lsdakjfh sadlfkj hsdflksdjhaf sdlkajfhsda flsadkjf h"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_instructions_title"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_instructions_title"
             />
-
-
     </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+</ScrollView>

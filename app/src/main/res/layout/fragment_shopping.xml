@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
               android:layout_height="match_parent"
               android:layout_width="match_parent"
               android:orientation="vertical"
@@ -7,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Namn"
+        android:text="@string/shopping_name_label"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -16,7 +15,7 @@
         android:id="@+id/store_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fyll i inköpslistans namn"
+        android:hint="@string/shopping_name_hint"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="16dp"
@@ -26,7 +25,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredienser"
+        android:text="@string/recipe_ingredient_label"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"

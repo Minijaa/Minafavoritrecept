@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,15 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
-        android:layout_marginStart="0dp"
-        android:text="Ingrediensnamn"
+        android:text="@string/item_shoppinglivemode_ingredientnamesample"
         android:textSize="18sp"
         android:textColor="@android:color/black"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintLeft_toRightOf="@+id/shopping_live_mode_ingredient_checkbox"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
 
     <TextView
         android:id="@+id/shopping_live_mode_ingredient_category_textview"
@@ -28,10 +26,9 @@
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:layout_marginStart="0dp"
-        android:text="Kategori"
-        android:textSize="10sp"
+        android:text="@string/recipe_category_label"
+        android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@+id/shopping_live_mode_ingredient_checkbox"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         app:layout_constraintTop_toBottomOf="@+id/shopping_live_mode_ingredient_name_textview"/>
 

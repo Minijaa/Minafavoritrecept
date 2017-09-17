@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,8 +11,8 @@
 
      <TextView
          android:id="@+id/shoppinglist_shopping_name"
-         android:text="Inköpslistans namn"
-         android:textSize="18dp"
+         android:text="@string/itemview_shopping_listname"
+         android:textSize="18sp"
          android:textColor="@android:color/black"
          android:layout_width="0dp"
          android:layout_height="wrap_content"
@@ -24,8 +23,8 @@
 
     <TextView
         android:id="@+id/shoppinglist_shopping_antal_artiklar"
-        android:text="(9)"
-        android:textSize="18dp"
+        android:text="@string/itemview_shopping_listquantity"
+        android:textSize="18sp"
         android:textColor="@android:color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,7 +37,7 @@
 
     <TextView
         android:id="@+id/shoppinglist_shopping_date"
-        android:text="2017-12-15"
+        android:text="@string/itemview_shopping_datesample"
         android:textSize="12sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
