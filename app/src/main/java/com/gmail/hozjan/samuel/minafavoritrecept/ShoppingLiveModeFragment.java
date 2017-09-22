@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//Fragment-klass som hanterar vyn för att visa shoppingläget för en enskild shoppinglista..
 public class ShoppingLiveModeFragment extends Fragment {
     private RecyclerView mShoppingIngredientsRecyclerView;
     private ShoppingList mShoppingList;
@@ -53,29 +54,33 @@ public class ShoppingLiveModeFragment extends Fragment {
 
     @Nullable
     @Override
+    // Skapa vyn och ställ in alla knappar/textfält.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shopping_live_mode, container, false);
-
-
         mShoppingIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.shopping_live_mode_recyclerview);
         mShoppingIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         updateUI();
-
         return v;
     }
 
+    // Uppdaterar UI:n.
     private void updateUI() {
         List<Ingredient> ingredients = mShoppingList.getIngredients();
         mAdapter = new IngredientAdapter(ingredients);
         mShoppingIngredientsRecyclerView.setAdapter(mAdapter);
     }
 
+    // Kopplar upp layout-filen för toolbar-menyn.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_shopping_live_mode, menu);
+        setUpStoreSpinner(menu);
+    }
 
+    // Kopplar upp Spinnern som används för att välja butik och därmed också ändrar ingredienslistans
+    // sorteringsordning.
+    private void setUpStoreSpinner(Menu menu) {
         MenuItem spinnerItem = menu.findItem(R.id.store_spinner);
         Spinner storeSpinner = (Spinner) MenuItemCompat.getActionView(spinnerItem);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mStoreNames);
@@ -87,19 +92,16 @@ public class ShoppingLiveModeFragment extends Fragment {
                 String storeName = (String) parent.getItemAtPosition(position);
                 List<Ingredient> sortedShoppingList = RecipeStorage.get(getActivity()).getSortedShoppingList(storeName, mShoppingList.getIngredients());
                 mShoppingList.setIngredients(sortedShoppingList);
-
                 updateUI();
                 mAdapter.notifyDataSetChanged();
 
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
+    // Sköter funktionalitet för knappen i toolbaren.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.shopping_enter_edit_mode) {
@@ -108,13 +110,14 @@ public class ShoppingLiveModeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    // ViewHolder-klass som håller ingrediensernas vyer.
     private class IngredientHolder extends RecyclerView.ViewHolder {
         private CheckBox mCheckBox;
         private Ingredient mIngredient;
         private TextView mName;
         private TextView mCategory;
 
-
+        //Konstruktor som initierar de olika widgetsen för varje ingrediens i listan.
         IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_shoppinglist_shopping_mode, parent, false));
             mCheckBox = (CheckBox) itemView.findViewById(R.id.shopping_live_mode_ingredient_checkbox);
@@ -124,15 +127,22 @@ public class ShoppingLiveModeFragment extends Fragment {
             mCategoryFlag = mCategory.getPaintFlags();
         }
 
+        //Binder en ingrediens till IngredientHoldern(ViewHoldern).
         void bind(final Ingredient ingredient) {
+            setUpCheckBox(ingredient);
+            mIngredient = ingredient;
+            mName.setText(mIngredient.getName());
+            mCategory.setText(mIngredient.getCategory());
+        }
+
+        // Koppla upp checkboxen som används för att markera och avmarkera en ingrediens.
+        private void setUpCheckBox(final Ingredient ingredient) {
             mCheckBox.setChecked(ingredient.isMarked());
             mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ingredient.setMarked(isChecked);
-
                     if (isChecked) {
-
                         mName.setPaintFlags(mName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         mCategory.setPaintFlags(mCategory.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {
@@ -141,36 +151,28 @@ public class ShoppingLiveModeFragment extends Fragment {
                     }
                 }
             });
-            mIngredient = ingredient;
-            mName.setText(mIngredient.getName());
-            mCategory.setText(mIngredient.getCategory());
         }
     }
 
+    //Adapterklass som skapar IngredientHolder-objekt samt binder ingredienser till dessa.
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
-
         IngredientAdapter(List<Ingredient> ingredients) {
             mIngredients = ingredients;
         }
-
         @Override
         public IngredientHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             return new IngredientHolder(layoutInflater, parent);
         }
-
         @Override
         public void onBindViewHolder(IngredientHolder holder, int position) {
             Ingredient ingredient = mIngredients.get(position);
             holder.bind(ingredient);
         }
-
         @Override
         public int getItemCount() {
             return mIngredients.size();
         }
     }
-
-
 }

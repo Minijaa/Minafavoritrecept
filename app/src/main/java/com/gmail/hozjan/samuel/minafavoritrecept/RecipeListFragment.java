@@ -39,7 +39,7 @@ public class RecipeListFragment extends Fragment {
         RecipeStorage.get(getActivity()).loadData();
     }
 
-    // Skapa vyn och ställ in alla knappar/textfält.
+    // Skapa vyn och koppla upp recyclerviewn.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIinstanceState) {
         View v = inflater.inflate(R.layout.fragment_recipe_list, container, false);
@@ -179,7 +179,7 @@ public class RecipeListFragment extends Fragment {
         inflater.inflate(R.menu.fragment_recipe_list, menu);
     }
 
-    // Sköter funktionalitet knapparna i toolbaren.
+    // Sköter funktionalitet för knapparna i toolbaren.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_recipe) {
