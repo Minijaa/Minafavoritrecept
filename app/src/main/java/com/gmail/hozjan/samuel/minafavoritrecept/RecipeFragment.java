@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,10 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.File;
 import java.util.UUID;
 
+//Fragment-klass som hanterar vyn för att visa ett enskilt recept.
 public class RecipeFragment extends Fragment {
     private Recipe mRecipe;
     private TextView mNameField;
@@ -32,14 +33,15 @@ public class RecipeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
         mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
         mRecipeImageFile = RecipeStorage.get(getActivity()).getImageFile(mRecipe);
     }
 
+
     @Nullable
     @Override
+    // Skapa vyn och ställ in alla knappar/textfält.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recipe, container, false);
         mNameField = (TextView) v.findViewById(R.id.recipe_name);
@@ -56,12 +58,14 @@ public class RecipeFragment extends Fragment {
         return v;
     }
 
+    // Kopplar upp layout-filen för toolbar-menyn.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_recipe, menu);
     }
 
+    // Sköter funktionalitet för knapparna i toolbaren.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.appbar_edit_recipe_button) {
@@ -80,6 +84,7 @@ public class RecipeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //Uppdaterar UI:n. Avslutar aktiviteten om inget recept finns kopplat. Dvs om användaren valt att radera receptet.
     public void updateUI() {
         UUID recipeId = (UUID) getActivity().getIntent().getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
         mRecipe = RecipeStorage.get(getActivity()).getRecipe(recipeId);
@@ -101,19 +106,17 @@ public class RecipeFragment extends Fragment {
 
 
     }
-
+    // Uppdaterar ImageViewn med fotograferad bild, alternativt en standard-bild.
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
-            //mRecipeImageView.setImageDrawable(null);
-            Drawable dr = getResources().getDrawable(R.drawable.default_image_red_jpg);
-            Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-            Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 360, 240, true));
-            mRecipeImageView.setImageDrawable(d);
+            Drawable dr = ResourcesCompat.getDrawable(getResources(), R.drawable.default_image_red_jpg, null);
+            if (dr != null){
+                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 360, 240, true));
+                mRecipeImageView.setImageDrawable(d);
+            }
+
         } else {
-//            Point size = new Point();
-//            getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-//            Bitmap bitmapUnscaled = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
-//            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmapUnscaled, size.y, size.x, true);
             Bitmap bitmapScaled = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmapScaled);
         }

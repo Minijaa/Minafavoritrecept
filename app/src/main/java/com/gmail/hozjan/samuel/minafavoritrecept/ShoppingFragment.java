@@ -18,15 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-
 import java.util.List;
 import java.util.UUID;
 
-
+//Fragment-klass som hanterar vyn för att visa en enskild inköpslista.
 public class ShoppingFragment extends Fragment {
     private RecyclerView mShoppingIngredientsRecyclerView;
     private ShoppingList mShoppingList;
@@ -43,9 +41,18 @@ public class ShoppingFragment extends Fragment {
 
     @Nullable
     @Override
+    // Skapa vyn och ställ in alla knappar/textfält samt recyclerview.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_shopping, container, false);
+        setUpShoppingListNameEditText(v);
+        mShoppingIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.shopping_ingredients_recycler_view);
+        mShoppingIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        updateUI();
+        return v;
+    }
+
+    // Ställer in EditText-fältet för att namnge inköpslistan.
+    private void setUpShoppingListNameEditText(View v) {
         EditText name = (EditText) v.findViewById(R.id.store_edit_name);
         name.setText(mShoppingList.getName());
         name.addTextChangedListener(new TextWatcher() {
@@ -64,22 +71,16 @@ public class ShoppingFragment extends Fragment {
 
             }
         });
-
-        mShoppingIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.shopping_ingredients_recycler_view);
-        mShoppingIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        updateUI();
-
-        return v;
     }
 
-
+    // Uppdaterar UI:n.
     private void updateUI() {
         List<Ingredient> ingredients = mShoppingList.getIngredients();
         mAdapter = new IngredientAdapter(ingredients);
         mShoppingIngredientsRecyclerView.setAdapter(mAdapter);
     }
 
+    //Tar fram position i spinnern för specifierad söksträng.
     private int getSpinnerIndex(Spinner spinner, String searchString) {
         int index = 0;
 
@@ -91,12 +92,14 @@ public class ShoppingFragment extends Fragment {
         return index;
     }
 
+    // Kopplar upp layout-filen för toolbar-menyn.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_shopping, menu);
     }
 
+    //Sköter funktionalitet för knapparna i toolbaren.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.shopping_new_ingredient) {
@@ -109,13 +112,14 @@ public class ShoppingFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    // ViewHolder-klass som håller ingrediensernas vyer.
     private class IngredientHolder extends RecyclerView.ViewHolder {
         private EditText mNameEditText;
         private Spinner mCategorySpinner;
         private ImageButton mDeleteButton;
         private Ingredient mIngredient;
 
-
+        //Konstruktor som initierar de olika widgetsen för varje ingrediens i listan.
         IngredientHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_shoppinglist, parent, false));
             mNameEditText = (EditText) itemView.findViewById(R.id.shopping_ingredient_name_edittext);
@@ -123,43 +127,17 @@ public class ShoppingFragment extends Fragment {
             mDeleteButton = (ImageButton) itemView.findViewById(R.id.shopping_ingredient_delete_button);
         }
 
+        //Binder en ingrediens till IngredientHoldern (View Holdern).
         void bind(final Ingredient ingredient) {
             mIngredient = ingredient;
-            mNameEditText.setText(mIngredient.getName());
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-            mCategorySpinner.setAdapter(adapter);
-            mCategorySpinner.setSelection(getSpinnerIndex(mCategorySpinner, mIngredient.getCategory()));
-            mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            setUpIngredientCategorySpinner();
+            setUpIngredientNameEditText();
+            setUpIngredientDeleteButton();
+        }
 
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    mIngredient.setCategory((String) parent.getItemAtPosition(position));
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-            mNameEditText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    mIngredient.setName(s.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+        //Ställer in delete-knappen för en enskild ingrediens.
+        private void setUpIngredientDeleteButton() {
             mDeleteButton.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -187,8 +165,50 @@ public class ShoppingFragment extends Fragment {
                 }
             });
         }
+
+        // Ställer in EditText-fältet för att kunna namnge en ingrediens.
+        private void setUpIngredientNameEditText() {
+            mNameEditText.setText(mIngredient.getName());
+            mNameEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    mIngredient.setName(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
+
+        // Ställer in Spinnern för att välja vilken kategori en specifik ingredient tillhör.
+        private void setUpIngredientCategorySpinner() {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.ingredient_category_choices, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            mCategorySpinner.setAdapter(adapter);
+            mCategorySpinner.setSelection(getSpinnerIndex(mCategorySpinner, mIngredient.getCategory()));
+            mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mIngredient.setCategory((String) parent.getItemAtPosition(position));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
     }
 
+    //Adapterklass som skapar IngredientHolder-objekt samt binder ingredienser till dessa.
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
 
@@ -214,11 +234,13 @@ public class ShoppingFragment extends Fragment {
         }
     }
 
+    //Döper inköpslistan till ett autogenererat namn om inget namn valts, samt lagrar data på fil.
     @Override
     public void onPause() {
         super.onPause();
         if (mShoppingList.getName() == null || mShoppingList.getName().equals("")) {
-            mShoppingList.setName("Inköpslista #" + RecipeStorage.get(getActivity()).getNoNameNr("shoppinglist"));
+            RecipeStorage.get(getActivity());
+            mShoppingList.setName("Inköpslista #" + RecipeStorage.getNoNameNr("shoppinglist"));
         }
         for (Ingredient i : mShoppingList.getIngredients()){
             if (i.getName() == null || i.getName().equals("")){

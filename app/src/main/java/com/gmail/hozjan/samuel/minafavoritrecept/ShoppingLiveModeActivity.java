@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.UUID;
 
+//Aktivitets-klass som håller en instans av ShoppingLiveModeFragment.
 public class ShoppingLiveModeActivity extends SingleFragmentActivity {
     public static final String EXTRA_SHOPPINGLIST_ID = "com.gmail.hozjan.samuel.minafavoritrecept.shoppinglist_id";
 

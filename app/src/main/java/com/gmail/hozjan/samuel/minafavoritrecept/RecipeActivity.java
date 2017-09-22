@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import java.util.UUID;
 
+//Aktivitets-klass som håller en instans av RecipeFragment.
 public class RecipeActivity extends SingleFragmentActivity {
     public static final String EXTRA_RECIPE_ID = "com.gmail.hozjan.samuel.minafavoritrecept.recipe_id";
 

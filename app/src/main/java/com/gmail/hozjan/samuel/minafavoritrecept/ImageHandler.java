@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-
+// Klass som skalar ned en bild. OBS denna är tagen ur kursboken "Android Programming - The Big Nerd Ranch".
 class ImageHandler {
     private static Bitmap getScaleBitMap(String path, int destWidth, int destHeight){
-        //Read in the dimensions of the image on disk
+        //Läs in bildens storlek.
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, options);
@@ -15,7 +15,7 @@ class ImageHandler {
         float srcWidth = options.outWidth;
         float srcHeight = options.outHeight;
 
-        //Figure out how much to scale down by
+        //Räkna ut hur mycket bilden ska skalas ner
         int inSampleSize = 1;
         if (srcHeight > destHeight || srcWidth > destWidth){
             float heightScale = srcHeight / destHeight;
@@ -26,7 +26,7 @@ class ImageHandler {
         options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize;
 
-        //Read in and create final bitmap
+        //Läst in och skapa en bitmap.
         return BitmapFactory.decodeFile(path, options);
     }
 
@@ -35,6 +35,4 @@ class ImageHandler {
         activity.getWindowManager().getDefaultDisplay().getSize(size);
         return getScaleBitMap(path, size.x, size.y);
     }
-
-
 }

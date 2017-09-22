@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//Modell-klass som håller datat för ett recept.
 class Recipe implements Serializable{
 
     private UUID mId;
@@ -13,55 +14,51 @@ class Recipe implements Serializable{
     private String mCategory;
     private ArrayList<Ingredient> mIngredients;
 
+    //Konstruktor som instansierar en tom ingredienslista samt genererar ett unikt UUID.
     Recipe() {
         mId = UUID.randomUUID();
         mIngredients = new ArrayList<>();
     }
-
+    //Getter och setters
     public UUID getId() {
         return mId;
     }
-
     public void setId(UUID mId) {
         this.mId = mId;
     }
-
     public String getName() {
         return mName;
     }
-
     void setName(String mName) {
         this.mName = mName;
     }
-
     String getDescription() {
         return mDescription;
     }
-
     void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
-
     String getCategory() {
         return mCategory;
     }
-
     void setCategory(String mCategory) {
         this.mCategory = mCategory;
     }
-
-    String getImageFilename() {
-        return "IMG_" + getId().toString() + ".jpg";
-    }
-
-    void addIngredient(Ingredient ingredient) {
-        mIngredients.add(ingredient);
-    }
-
     List<Ingredient> getIngredients() {
         return mIngredients;
     }
 
+    //Returnerar ett unikt filnamn.
+    String getImageFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
+
+    //Lägg till en specifierar ingrediens till receptet.
+    void addIngredient(Ingredient ingredient) {
+        mIngredients.add(ingredient);
+    }
+
+    // Returnerar receptets alla ingredienser som en sträng.
     String getIngredientsAsString() {
         String ingredients = "";
         for (Ingredient i : mIngredients) {
@@ -77,6 +74,7 @@ class Recipe implements Serializable{
         return ingredients;
     }
 
+    //Raderar specifierar ingrediens ur receptet.
     void removeIngredient(Ingredient ingredient) {
         mIngredients.remove(ingredient);
     }
