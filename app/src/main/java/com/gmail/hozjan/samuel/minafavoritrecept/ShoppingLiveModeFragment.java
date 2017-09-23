@@ -83,8 +83,8 @@ public class ShoppingLiveModeFragment extends Fragment {
     private void setUpStoreSpinner(Menu menu) {
         MenuItem spinnerItem = menu.findItem(R.id.store_spinner);
         Spinner storeSpinner = (Spinner) MenuItemCompat.getActionView(spinnerItem);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mStoreNames);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.store_spinner_item, mStoreNames);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.storespinner_dropdown_item);
         storeSpinner.setAdapter(spinnerArrayAdapter);
         storeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,8 +96,10 @@ public class ShoppingLiveModeFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
 
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -135,20 +137,22 @@ public class ShoppingLiveModeFragment extends Fragment {
             mCategory.setText(mIngredient.getCategory());
         }
 
-        // Koppla upp checkboxen som används för att markera och avmarkera en ingrediens.
+        // Koppla upp checkboxen som används för att markera och avmarkera en ingrediens. Gör namntexten
+        // och kategoritexten genomstruken om ingrediensen är markerad (Checked).
         private void setUpCheckBox(final Ingredient ingredient) {
             mCheckBox.setChecked(ingredient.isMarked());
+            if (ingredient.isMarked()) {
+                mName.setPaintFlags(mName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                mCategory.setPaintFlags(mCategory.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                mName.setPaintFlags(mNameFlag);
+                mCategory.setPaintFlags(mCategoryFlag);
+            }
             mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ingredient.setMarked(isChecked);
-                    if (isChecked) {
-                        mName.setPaintFlags(mName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        mCategory.setPaintFlags(mCategory.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    } else {
-                        mName.setPaintFlags(mNameFlag);
-                        mCategory.setPaintFlags(mCategoryFlag);
-                    }
+                    mAdapter.notifyDataSetChanged();
                 }
             });
         }
@@ -157,19 +161,23 @@ public class ShoppingLiveModeFragment extends Fragment {
     //Adapterklass som skapar IngredientHolder-objekt samt binder ingredienser till dessa.
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientHolder> {
         private List<Ingredient> mIngredients;
+
         IngredientAdapter(List<Ingredient> ingredients) {
             mIngredients = ingredients;
         }
+
         @Override
         public IngredientHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             return new IngredientHolder(layoutInflater, parent);
         }
+
         @Override
         public void onBindViewHolder(IngredientHolder holder, int position) {
             Ingredient ingredient = mIngredients.get(position);
             holder.bind(ingredient);
         }
+
         @Override
         public int getItemCount() {
             return mIngredients.size();
