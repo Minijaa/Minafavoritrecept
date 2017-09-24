@@ -19,7 +19,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +31,6 @@ public class ShoppingLiveModeFragment extends Fragment {
     private List<String> mStoreNames;
     private int mNameFlag;
     private int mCategoryFlag;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
