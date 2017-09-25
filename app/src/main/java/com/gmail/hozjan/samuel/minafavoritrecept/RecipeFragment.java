@@ -2,6 +2,8 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -117,8 +119,12 @@ public class RecipeFragment extends Fragment {
             }
 
         } else {
-            Bitmap bitmapScaled = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
-            mRecipeImageView.setImageBitmap(bitmapScaled);
+            // Min förändring verkar funka i detta fall....
+            //Bitmap bitmapScaled = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
+            Point size = new Point();
+            getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+            Bitmap bm = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
+            mRecipeImageView.setImageBitmap(bm);
         }
     }
 }
