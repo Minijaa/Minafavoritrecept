@@ -34,7 +34,7 @@ public class ShoppingLiveModeFragment extends Fragment {
     private int mStoreSpinnerIndex = 0;
     private static final String STORE_SPINNER_INDEX = "index";
 
-    // Läs in aktuell inköpslista, initiera lista över butik-namn och läs ev in position för markerad butik.
+    //Läs in aktuell inköpslista, initiera lista över butik-namn och läs ev in position för markerad butik.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
