@@ -2,8 +2,6 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -108,7 +106,7 @@ public class RecipeFragment extends Fragment {
 
 
     }
-    // Uppdaterar ImageViewn med fotograferad bild, alternativt en standard-bild.
+    // Uppdaterar ImageViewn med fotograferad bild nedskalad till skärmens storlek, alternativt en standard-bild.
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
             Drawable dr = ResourcesCompat.getDrawable(getResources(), R.drawable.default_image_red_jpg, null);
@@ -119,12 +117,8 @@ public class RecipeFragment extends Fragment {
             }
 
         } else {
-            // Min förändring verkar funka i detta fall....
-            //Bitmap bitmapScaled = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
-            Point size = new Point();
-            getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-            Bitmap bm = BitmapFactory.decodeFile(mRecipeImageFile.getAbsolutePath());
-            mRecipeImageView.setImageBitmap(bm);
+            Bitmap bitmapScaled = ScaleImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
+            mRecipeImageView.setImageBitmap(bitmapScaled);
         }
     }
 }

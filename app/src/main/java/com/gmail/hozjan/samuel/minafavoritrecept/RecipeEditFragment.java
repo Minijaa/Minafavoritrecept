@@ -180,7 +180,7 @@ public class RecipeEditFragment extends Fragment {
                 mRecipeImageView.setImageBitmap(bitmap);
             }
         } else {
-            Bitmap bitmap = ImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
+            Bitmap bitmap = ScaleImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmap);
         }
     }

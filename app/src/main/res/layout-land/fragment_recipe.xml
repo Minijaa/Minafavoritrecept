@@ -112,7 +112,6 @@
             android:id="@+id/recipe_instructions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#f5f5f5"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="8dp"

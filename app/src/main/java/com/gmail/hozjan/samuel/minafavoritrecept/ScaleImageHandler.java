@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-// Klass som skalar ned en bild. OBS denna är tagen ur kursboken "Android Programming - The Big Nerd Ranch".
-class ImageHandler {
+// Klass som skalar ned en bild. OBS denna är tagen ur kursboken "Android Programming - The Big Nerd Ranch",
+// s.314 av Bill Phillips, Chris Stewart och Kristin Marsicano.
+class ScaleImageHandler {
     private static Bitmap getScaleBitMap(String path, int destWidth, int destHeight){
         //Läs in bildens storlek.
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -30,6 +31,7 @@ class ImageHandler {
         return BitmapFactory.decodeFile(path, options);
     }
 
+    // Kollar hur stor skärmen är och skalar ned bilden till den storleken.
     static Bitmap getScaledBitmap(String path, Activity activity){
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);

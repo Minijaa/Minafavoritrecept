@@ -31,12 +31,24 @@ public class ShoppingLiveModeFragment extends Fragment {
     private List<String> mStoreNames;
     private int mNameFlag;
     private int mCategoryFlag;
+    private int mStoreSpinnerIndex = 0;
+    private static final String STORE_SPINNER_INDEX = "index";
 
+    // Läs in aktuell inköpslista, initiera lista över butik-namn och läs ev in position för markerad butik.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            mStoreSpinnerIndex = savedInstanceState.getInt(STORE_SPINNER_INDEX);
+        }
         UUID shoppingListId = (UUID) getActivity().getIntent().getSerializableExtra(ShoppingActivity.EXTRA_SHOPPINGLIST_ID);
         mShoppingList = RecipeStorage.get(getActivity()).getShoppingList(shoppingListId);
+        setUpStoreNamesList();
+        setHasOptionsMenu(true);
+
+    }
+    // Initiera lista med alla butik-namn och lägg till en standardbutik på den första positionen
+    private void setUpStoreNamesList() {
         mStoreNames = new ArrayList<>();
         for (Store s : RecipeStorage.get(getActivity()).getStores()) {
             mStoreNames.add(s.getName());
@@ -46,8 +58,13 @@ public class ShoppingLiveModeFragment extends Fragment {
         if (!mStoreNames.contains(standardStore.getName())) {
             mStoreNames.add(0, standardStore.getName());
         }
-        setHasOptionsMenu(true);
+    }
 
+    // Spara undan positionen för den för tillfället markerade butiken (sorteringsordningen)
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STORE_SPINNER_INDEX, mStoreSpinnerIndex);
     }
 
     @Nullable
@@ -84,11 +101,13 @@ public class ShoppingLiveModeFragment extends Fragment {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.store_spinner_item, mStoreNames);
         spinnerArrayAdapter.setDropDownViewResource(R.layout.storespinner_dropdown_item);
         storeSpinner.setAdapter(spinnerArrayAdapter);
+        storeSpinner.setSelection(mStoreSpinnerIndex);
         storeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String storeName = (String) parent.getItemAtPosition(position);
                 List<Ingredient> sortedShoppingList = RecipeStorage.get(getActivity()).getSortedShoppingList(storeName, mShoppingList.getIngredients());
+                mStoreSpinnerIndex = position;
                 mShoppingList.setIngredients(sortedShoppingList);
                 updateUI();
                 mAdapter.notifyDataSetChanged();
