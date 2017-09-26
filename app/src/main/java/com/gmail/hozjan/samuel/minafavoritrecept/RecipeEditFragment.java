@@ -19,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 // Fragment-klass som hanterar editering av befintliga samt nyskapade recept.
 public class RecipeEditFragment extends Fragment {
@@ -45,6 +47,7 @@ public class RecipeEditFragment extends Fragment {
     private File mRecipeImageFile;
     private IngredientAdapter mAdapter;
     private ImageView mRecipeImageView;
+    private static final String TAG = "Minafavoritrecept";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -218,6 +221,13 @@ public class RecipeEditFragment extends Fragment {
             alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    // Radera bildfilen från det interna minnet om receptet innehåller en bild
+                    if (RecipeStorage.get(getActivity()).getImageFile(mRecipe)!= null){
+                        if (getActivity().deleteFile(mRecipe.getImageFilename())){
+                            Log.d(TAG, mRecipe.getImageFilename() + " borttagen!");
+                        }
+
+                    }
                     RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
                     dialog.dismiss();
                     getActivity().finish();

@@ -13,6 +13,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import java.util.List;
 public class RecipeListFragment extends Fragment {
     private RecyclerView mRecipeRecyclerView;
     private RecipeAdapter mAdapter;
+    private static final String TAG = "Minafavoritrecept";
 
     //Läser in sparad data från fil.
     @Override
@@ -102,6 +104,12 @@ public class RecipeListFragment extends Fragment {
                     alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            // Radera bildfilen från det interna minnet om receptet innehåller en bild
+                            if (RecipeStorage.get(getActivity()).getImageFile(mRecipe)!= null){
+                                if (getActivity().deleteFile(mRecipe.getImageFilename())){
+                                    Log.d(TAG, mRecipe.getImageFilename() + " borttagen!");
+                                }
+                            }
                             RecipeStorage.get(getActivity()).deleteRecipe(mRecipe);
                             mAdapter.notifyDataSetChanged();
                             dialog.dismiss();

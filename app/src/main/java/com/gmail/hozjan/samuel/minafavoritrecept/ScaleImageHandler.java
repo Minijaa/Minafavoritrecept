@@ -5,7 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 // Klass som skalar ned en bild. OBS denna är tagen ur kursboken "Android Programming - The Big Nerd Ranch",
-// s.314 av Bill Phillips, Chris Stewart och Kristin Marsicano.
+// s.314 av Bill Phillips, Chris Stewart och Kristin Marsicano. Dock finns det en liknande lösning
+// hos Androids egna Developer-sida: https://developer.android.com/topic/performance/graphics/load-bitmap.html
 class ScaleImageHandler {
     private static Bitmap getScaleBitMap(String path, int destWidth, int destHeight){
         //Läs in bildens storlek.
