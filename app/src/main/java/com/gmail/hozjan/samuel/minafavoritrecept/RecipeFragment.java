@@ -2,6 +2,7 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -104,7 +105,6 @@ public class RecipeFragment extends Fragment {
         super.onResume();
         updateUI();
 
-
     }
     // Uppdaterar ImageViewn med fotograferad bild nedskalad till skärmens storlek, alternativt en standard-bild.
     private void updateImageView() {
@@ -112,10 +112,9 @@ public class RecipeFragment extends Fragment {
             Drawable dr = ResourcesCompat.getDrawable(getResources(), R.drawable.default_image_red_jpg, null);
             if (dr != null){
                 Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 360, 240, true));
-                mRecipeImageView.setImageDrawable(d);
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 360, 240, true);
+                mRecipeImageView.setImageBitmap(scaled);
             }
-
         } else {
             Bitmap bitmapScaled = ScaleImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmapScaled);
