@@ -35,9 +35,7 @@ import android.widget.Spinner;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
-
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 // Fragment-klass som hanterar editering av befintliga samt nyskapade recept.
 public class RecipeEditFragment extends Fragment {

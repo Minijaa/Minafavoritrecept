@@ -2,7 +2,6 @@ package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
