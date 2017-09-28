@@ -1,3 +1,9 @@
+/*
+Namn: Samuel Hozjan
+Personnr: 820612-0159
+elevId: saho0099
+email: samuel.hozjan@gmail.com
+ */
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
 import java.io.Serializable;
