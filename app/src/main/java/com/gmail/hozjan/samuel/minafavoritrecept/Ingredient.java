@@ -10,15 +10,6 @@ class Ingredient implements Serializable {
     private String mName;
     private String mCategory;
     private boolean mIsMarked;
-
-    public boolean isFocused() {
-        return mIsFocused;
-    }
-
-    public void setFocused(boolean focused) {
-        mIsFocused = focused;
-    }
-
     private boolean mIsFocused;
 
     //Konstruktor som genererar ett unikt UUID och sätter det boolska värdet för huruvida ingrediensen är flaggad som markerad som falsk.
@@ -48,5 +39,11 @@ class Ingredient implements Serializable {
     }
     public UUID getId() {
         return mId;
+    }
+    boolean isFocused() {
+        return mIsFocused;
+    }
+    void setFocused(boolean focused) {
+        mIsFocused = focused;
     }
 }

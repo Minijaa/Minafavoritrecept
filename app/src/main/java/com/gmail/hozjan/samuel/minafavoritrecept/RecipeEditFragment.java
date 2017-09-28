@@ -103,6 +103,7 @@ public class RecipeEditFragment extends Fragment {
     //Ställer in knappen för att lägga till ingredienser
     private void setUpAddIngredientButton(View v) {
         ImageButton addIngredientButton = (ImageButton) v.findViewById(R.id.edit_add_ingredient_button);
+        // Skapar en ny ingrediens och ser till att den hamnar överst samt får fokus.
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,11 +118,12 @@ public class RecipeEditFragment extends Fragment {
         });
     }
 
-    //Ställer in EditText-fältet för receptets instruktioner att lyssna efter text.
+    //Ställer in EditText-fältet för receptets instruktioner att lyssna efter text, samt spara denna
+    //text som receptets instruktion.
     private void setUpInstructionsEditText(View v) {
-        EditText insctructions = (EditText) v.findViewById(R.id.edit_recipe_description);
-        insctructions.setText(mRecipe.getDescription());
-        insctructions.addTextChangedListener(new TextWatcher() {
+        EditText instructions = (EditText) v.findViewById(R.id.edit_recipe_description);
+        instructions.setText(mRecipe.getDescription());
+        instructions.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
