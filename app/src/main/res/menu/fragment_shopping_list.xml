@@ -3,26 +3,26 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
+        android:id="@+id/shopping_stores"
+        android:icon="@drawable/ic_store_white_24dp"
+        android:title="@string/menubutton_my_stores"
+        app:showAsAction="ifRoom|withText"
+        />
+
+    <item
         android:id="@+id/navigate_to_recipe_list"
         android:icon="@drawable/ic_restaurant_white_24dp"
         android:title="@string/menubutton_recipes"
         app:showAsAction="ifRoom|withText"
         />
-    <item
-        android:id="@+id/shopping_stores"
-        android:icon="@drawable/ic_store_white_24dp"
-        android:title="@string/menubutton_my_stores"
-        app:showAsAction="ifRoom|withText"
-        >
 
-    </item>
     <item
         android:id="@+id/new_shoppinglist"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/menubutton_new_shoppinglist"
         app:showAsAction="ifRoom|withText"
-        >
+        />
 
-    </item>
+
 
 </menu>
