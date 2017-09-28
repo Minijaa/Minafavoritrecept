@@ -199,6 +199,9 @@ public class RecipeListFragment extends Fragment {
         } else if (item.getItemId() == R.id.navigate_to_shoppinglists) {
             Intent intent = ShoppingListActivity.newIntent(getActivity());
             startActivity(intent);
+        } else if (item.getItemId() == R.id.shopping_stores){
+            Intent intent = StoreListActivity.newIntent(getActivity());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

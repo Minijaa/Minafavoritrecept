@@ -108,12 +108,7 @@ public class RecipeFragment extends Fragment {
     // Uppdaterar ImageViewn med fotograferad bild nedskalad till skärmens storlek, alternativt en standard-bild.
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
-            Drawable dr = ResourcesCompat.getDrawable(getResources(), R.drawable.default_image_red_jpg, null);
-            if (dr != null){
-                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 360, 240, true);
-                mRecipeImageView.setImageBitmap(scaled);
-            }
+            return;
         } else {
             Bitmap bitmapScaled = ScaleImageHandler.getScaledBitmap(mRecipeImageFile.getPath(), getActivity());
             mRecipeImageView.setImageBitmap(bitmapScaled);
