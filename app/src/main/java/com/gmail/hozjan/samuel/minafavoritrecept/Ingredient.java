@@ -11,6 +11,16 @@ class Ingredient implements Serializable {
     private String mCategory;
     private boolean mIsMarked;
 
+    public boolean isFocused() {
+        return mIsFocused;
+    }
+
+    public void setFocused(boolean focused) {
+        mIsFocused = focused;
+    }
+
+    private boolean mIsFocused;
+
     //Konstruktor som genererar ett unikt UUID och sätter det boolska värdet för huruvida ingrediensen är flaggad som markerad som falsk.
     Ingredient() {
         mId = UUID.randomUUID();

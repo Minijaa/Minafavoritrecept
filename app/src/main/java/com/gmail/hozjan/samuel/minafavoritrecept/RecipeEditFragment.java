@@ -32,9 +32,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
+
 import static android.app.Activity.RESULT_OK;
 
 // Fragment-klass som hanterar editering av befintliga samt nyskapade recept.
@@ -104,7 +106,12 @@ public class RecipeEditFragment extends Fragment {
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecipe.addIngredient(new Ingredient());
+                Ingredient newIngredient = new Ingredient();
+                for (Ingredient i : mRecipe.getIngredients()) {
+                    i.setFocused(false);
+                }
+                newIngredient.setFocused(true);
+                mRecipe.addIngredient(0, newIngredient);
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -172,6 +179,7 @@ public class RecipeEditFragment extends Fragment {
             }
         });
     }
+
     // Uppdaterar ImageViewn med fotograferad bild, alternativt en standard-bild.
     private void updateImageView() {
         if (mRecipeImageFile == null || !mRecipeImageFile.exists()) {
@@ -198,6 +206,7 @@ public class RecipeEditFragment extends Fragment {
             }
         }
     }
+
     // Kopplar upp layout-filen för toolbar-menyn.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -220,8 +229,8 @@ public class RecipeEditFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Radera bildfilen från det interna minnet om receptet innehåller en bild
-                    if (RecipeStorage.get(getActivity()).getImageFile(mRecipe)!= null){
-                        if (getActivity().deleteFile(mRecipe.getImageFilename())){
+                    if (RecipeStorage.get(getActivity()).getImageFile(mRecipe) != null) {
+                        if (getActivity().deleteFile(mRecipe.getImageFilename())) {
                             Log.d(TAG, mRecipe.getImageFilename() + " borttagen!");
                         }
 
@@ -263,7 +272,6 @@ public class RecipeEditFragment extends Fragment {
         //Binder en ingrediens till IngredientHoldern (View Holdern).
         void bind(final Ingredient ingredient) {
             mIngredient = ingredient;
-            mIngredientNameEditText.setText(mIngredient.getName());
             setUpIngredientCategorySpinner();
             setUpIngredientNameEditText();
             setUpIngredientDeleteButton();
@@ -303,6 +311,11 @@ public class RecipeEditFragment extends Fragment {
 
         // Ställer in EditText-fältet för att kunna namnge en ingrediens.
         private void setUpIngredientNameEditText() {
+            mIngredientNameEditText.setText(mIngredient.getName());
+            if (mIngredient.isFocused()){
+                mIngredientNameEditText.requestFocus();
+            }
+
             mIngredientNameEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

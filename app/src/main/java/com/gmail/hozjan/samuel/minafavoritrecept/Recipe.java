@@ -53,9 +53,13 @@ class Recipe implements Serializable{
         return "IMG_" + getId().toString() + ".jpg";
     }
 
-    //Lägg till en specifierar ingrediens till receptet.
+    //Lägg till en specifierad ingrediens till receptet.
     void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
+    }
+
+    void addIngredient(int position, Ingredient ingredient){
+        mIngredients.add(position, ingredient);
     }
 
     // Returnerar receptets alla ingredienser som en sträng.

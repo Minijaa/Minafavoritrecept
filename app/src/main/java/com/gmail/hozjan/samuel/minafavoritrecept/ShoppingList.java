@@ -47,6 +47,9 @@ class ShoppingList implements Serializable {
     void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
+    void addIngredient(int position, Ingredient ingredient) {
+        mIngredients.add(position,ingredient);
+    }
 
     // Tar bort en ingrediens.
     void removeIngredient(Ingredient ingredient) {

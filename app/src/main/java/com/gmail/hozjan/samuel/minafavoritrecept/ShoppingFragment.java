@@ -102,8 +102,14 @@ public class ShoppingFragment extends Fragment {
     //Sköter funktionalitet för knapparna i toolbaren.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Skapar en ny ingrediens och ser till att den hamnar överst samt får fokus.
         if (item.getItemId() == R.id.shopping_new_ingredient) {
-            mShoppingList.addIngredient(new Ingredient());
+            Ingredient newIngredient = new Ingredient();
+            for (Ingredient i : mShoppingList.getIngredients()){
+                i.setFocused(false);
+            }
+            newIngredient.setFocused(true);
+            mShoppingList.addIngredient(0,newIngredient);
             mAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.shopping_enter_shopping_mode) {
             Intent intent = ShoppingLiveModeActivity.newIntent(getContext(), mShoppingList.getId());
@@ -169,10 +175,15 @@ public class ShoppingFragment extends Fragment {
         // Ställer in EditText-fältet för att kunna namnge en ingrediens.
         private void setUpIngredientNameEditText() {
             mNameEditText.setText(mIngredient.getName());
+            if (mIngredient.isFocused()){
+                mNameEditText.requestFocus();
+
+            }
+
+
             mNameEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                 }
 
                 @Override
