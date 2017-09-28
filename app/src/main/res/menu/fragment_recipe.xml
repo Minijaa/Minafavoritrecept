@@ -4,7 +4,7 @@
     <item
         android:id="@+id/appbar_add_to_shoppinglist"
         android:icon="@drawable/ic_add_shopping_cart_white_24dp"
-        android:title="@string/edit_recipe"
+        android:title="@string/overfor_inkopslista"
         app:showAsAction="ifRoom|withText">
     </item>
 
