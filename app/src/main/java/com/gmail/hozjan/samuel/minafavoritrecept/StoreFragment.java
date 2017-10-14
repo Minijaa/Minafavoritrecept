@@ -6,6 +6,7 @@ email: samuel.hozjan@gmail.com
  */
 package com.gmail.hozjan.samuel.minafavoritrecept;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -173,6 +177,22 @@ public class StoreFragment extends Fragment {
         public int getItemCount() {
             return mCategories.size();
         }
+    }
+
+    // Kopplar upp layout-filen för toolbar-menyn.
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_store, menu);
+    }
+
+    //Sköter funktionalitet för knapparna i toolbaren.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.store_done_button) {
+            getActivity().finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //Döper butiken till ett autogenererat namn om inget namn valts, samt lagrar data på fil.

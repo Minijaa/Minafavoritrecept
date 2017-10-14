@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -75,6 +76,7 @@ public class RecipeEditFragment extends Fragment {
         updateImageView();
         mIngredientsRecyclerView = (RecyclerView) v.findViewById(R.id.ingredients_recycler_view);
         mIngredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        setUpDoneButton(v);
         setUpRecipeNameEditText(v);
         setUpPhotoButton(v, packageManager);
         setUpAddIngredientButton(v);
@@ -83,6 +85,16 @@ public class RecipeEditFragment extends Fragment {
         updateUI();
         return v;
     }
+
+//    private void setUpDoneButton(View v) {
+//        Button doneButton = (Button)v.findViewById(R.id.recipe_done_button);
+//        doneButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().finish();
+//            }
+//        });
+//    }
 
     //Ställer in EditText-fältet för att namnge receptet.
     private void setUpRecipeNameEditText(View v) {
@@ -257,6 +269,8 @@ public class RecipeEditFragment extends Fragment {
             });
             alert.show();
 
+        }else if (item.getItemId() == R.id.appbar_recipe_done_button){
+            getActivity().finish();
         }
         return super.onOptionsItemSelected(item);
 

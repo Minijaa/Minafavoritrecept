@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/appbar_delete_recipe_button"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/recipe_delete_menulabel"
-        app:showAsAction="ifRoom|withText">
-    </item>
-    <item
-        android:id="@+id/appbar_recipe_done_button"
+      <item
+        android:id="@+id/store_done_button"
         android:icon="@drawable/ic_done_white_24dp"
         android:title="@string/klar_knapp"
         app:showAsAction="ifRoom|withText">

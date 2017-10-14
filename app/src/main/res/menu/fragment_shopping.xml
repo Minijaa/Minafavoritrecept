@@ -12,6 +12,10 @@
         android:icon="@drawable/ic_menu_add"
         android:title="@string/menubutton_new_ingredient"
         app:showAsAction="ifRoom|withText"/>
-
+    <item
+        android:id="@+id/shopping_done_button"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="@string/klar_knapp"
+        app:showAsAction="ifRoom|withText"/>
 
 </menu>

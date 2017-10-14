@@ -37,5 +37,7 @@
     <string name="menubutton_edit">Ändra</string>
     <string name="menubutton_new_store">Ny Affär</string>
     <string name="overfor_inkopslista">Överför till inköpslista</string>
+    <string name="recipe_delete_menulabel">Radera recept</string>
+    <string name="klar_knapp">Klar</string>
 
 </resources>

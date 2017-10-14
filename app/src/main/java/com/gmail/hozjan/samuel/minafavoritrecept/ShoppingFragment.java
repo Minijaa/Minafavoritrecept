@@ -120,6 +120,8 @@ public class ShoppingFragment extends Fragment {
         } else if (item.getItemId() == R.id.shopping_enter_shopping_mode) {
             Intent intent = ShoppingLiveModeActivity.newIntent(getContext(), mShoppingList.getId());
             startActivity(intent);
+        }else if (item.getItemId() == R.id.shopping_done_button){
+            getActivity().finish();
         }
         return super.onOptionsItemSelected(item);
     }
