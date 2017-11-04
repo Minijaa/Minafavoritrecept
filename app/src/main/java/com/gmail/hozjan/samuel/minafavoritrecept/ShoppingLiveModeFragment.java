@@ -163,6 +163,7 @@ public class ShoppingLiveModeFragment extends Fragment {
         // Koppla upp checkboxen som används för att markera och avmarkera en ingrediens. Gör namntexten
         // och kategoritexten genomstruken om ingrediensen är markerad (Checked).
         private void setUpCheckBox(final Ingredient ingredient) {
+            mCheckBox.setOnCheckedChangeListener(null);
             mCheckBox.setChecked(ingredient.isMarked());
             if (ingredient.isMarked()) {
                 mName.setPaintFlags(mName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -171,7 +172,8 @@ public class ShoppingLiveModeFragment extends Fragment {
                 mName.setPaintFlags(mNameFlag);
                 mCategory.setPaintFlags(mCategoryFlag);
             }
-            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ingredient.setMarked(isChecked);
